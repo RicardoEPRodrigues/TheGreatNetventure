@@ -4,6 +4,8 @@ $(document).ready(function(){
 	var file = 'railshooter.js';
     var title = 'rail shooter';
     
+    var fullgamepath = dir + '/' + file;
+    
 	document.title = 'phaser - ' + title;
 	$("#title").append(title);
 
@@ -17,48 +19,48 @@ $(document).ready(function(){
 	};
 
     $.getScript(local_copy_of_phaser).done(function( script, textStatus ) {
-        console.log("Failed to load Phaser.js from github, falling back to local copy")
-        load_example_code();
+        //console.log("Failed to load Phaser.js from github, falling back to local copy")
+        load_example_code(fullgamepath);
         phaser_version_update(local_copy_of_phaser_version);
     });
 
-	var load_example_code = function () {		
-		$.getScript(dir + '/' + file).done(function(script, textStatus) {
-			$.ajax({ url: dir + '/' + file, dataType: "text" }).done(function(data) {
-				$("#sourcecode").text(data);
-				$.getScript("js/run_prettify.js");
-			});
-
-			//	Hook up the control panel
-			$(".pause-button").click(function() {
-				if (game.paused)
-				{
-					game.paused = false;
-				}
-				else
-				{
-					game.paused = true;
-				}
-			});
-
-			$(".mute-button").click(function() {
-				if (game.sound.mute)
-				{
-					game.sound.mute = false;
-				}
-				else
-				{
-					game.sound.mute = true;
-				}
-			});
-
-			$(".reset-button").click(function() {
-				document.location.reload(true);
-			});
+	var load_example_code = function (fullpath) {		
+		$.getScript(fullpath).done(function(script, textStatus) {
+//			$.ajax({ url: dir + '/' + file, dataType: "text" }).done(function(data) {
+//				$("#sourcecode").text(data);
+//				$.getScript("js/run_prettify.js");
+//			});
+//
+//			//	Hook up the control panel
+//			$(".pause-button").click(function() {
+//				if (game.paused)
+//				{
+//					game.paused = false;
+//				}
+//				else
+//				{
+//					game.paused = true;
+//				}
+//			});
+//
+//			$(".mute-button").click(function() {
+//				if (game.sound.mute)
+//				{
+//					game.sound.mute = false;
+//				}
+//				else
+//				{
+//					game.sound.mute = true;
+//				}
+//			});
+//
+//			$(".reset-button").click(function() {
+//				document.location.reload(true);
+//			});
 
 		}).fail(function(jqxhr, settings, exception) {
 			$("#title").text("Error");
-			var node = '<p>Unable to load <u>' + title + '</u></p>';
+			var node = '<p>Unable to load <u>' + fullpath + '</u></p>';
 			$('#phaser-example').append(node);
 		});
 	}

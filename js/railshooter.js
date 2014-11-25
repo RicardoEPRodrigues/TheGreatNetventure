@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-slot', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(500, 600, Phaser.AUTO, 'game-slot', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
@@ -49,7 +49,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  The scrolling starfield background
-    starfield = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+    starfield = game.add.tileSprite(0, 0, 500, 600, 'starfield');
 
     //  Our bullet group
     bullets = game.add.group();
@@ -72,7 +72,7 @@ function create() {
     enemyBullets.setAll('checkWorldBounds', true);
 
     //  The hero!
-    player = game.add.sprite(400, 500, 'ship');
+    player = game.add.sprite(250, 500, 'ship');
     player.anchor.setTo(0.5, 0.5);
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds = true;
@@ -87,22 +87,23 @@ function create() {
     scoreString = 'Score : ';
     scoreText = game.add.text(10, 10, scoreString + score, { font: '34px Arial', fill: '#fff' });
 
-    //  Lives
+    //  Lives 
+    // game.world.width - 230
     lives = game.add.group();
-    game.add.text(game.world.width - 230, 10, 'Lives : ', { font: '34px Arial', fill: '#fff' });
-
-    //  Text
-    stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
-    stateText.anchor.setTo(0.5, 0.5);
-    stateText.visible = false;
+    game.add.text(10 , game.world.height - 10 - 34, 'Lives : ', { font: '34px Arial', fill: '#fff' });
 
     for (var i = 0; i < 3; i++) 
     {
-        var ship = lives.create(game.world.width - 100 + (30 * i), 30, 'ship');
+        var ship = lives.create(130 + (30 * i), game.world.height - 28, 'ship');
         ship.anchor.setTo(0.5, 0.5);
         ship.angle = 90;
         ship.alpha = 0.6;
     }
+
+    //  Text
+    stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '76px Arial', fill: '#fff' });
+    stateText.anchor.setTo(0.5, 0.5);
+    stateText.visible = false;
 
     //  An explosion pool
     explosions = game.add.group();
@@ -112,33 +113,47 @@ function create() {
     //  And some controls to play the game with
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    
 }
 
 function createAliens () {
 
-    for (var y = 0; y < 4; y++)
-    {
-        for (var x = 0; x < 10; x++)
-        {
-            var alien = aliens.create(x * 48, y * 50, 'invader');
-            alien.anchor.setTo(0.5, 0.5);
-            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
-            alien.play('fly');
-            alien.body.moves = false;
-            alien.checkWorldBounds = true;
-            alien.outOfBoundsKill = true;
-        }
+//    for (var y = 0; y < 4; y++)
+//    {
+//        for (var x = 0; x < 10; x++)
+//        {
+//            var alien = aliens.create(x * 48, y * 50, 'invader');
+//            alien.anchor.setTo(0.5, 0.5);
+//            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
+//            alien.play('fly');
+//            alien.body.moves = false;
+//            alien.checkWorldBounds = true;
+//            alien.outOfBoundsKill = true;
+//        }
+//    }
+    for (var k = 0; k < 3; k++) {
+        var alien = aliens.create(k * 48 * 3, k * 50, 'invader');
+        alien.anchor.setTo(0.5, 0.5);
+        alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
+        alien.play('fly');
+        alien.body.moves = false;
+        alien.checkWorldBounds = true;
+        alien.outOfBoundsKill = true;
+        
+        var tween = game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+        .to({ y: alien.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
+        .to({ x: alien.position.x }, 2000, Phaser.Easing.Linear.None)
+        .to({ y: alien.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
+        .start();
     }
-
+    
     aliens.x = 100;
     aliens.y = 50;
 
     //  All this does is basically start the invaders moving. Notice we're moving the Group they belong to, rather than the invaders directly.
-    var tween = game.add.tween(aliens).to( { x: 200 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+//    var tween = game.add.tween(aliens).to( { x: 200 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
     //  When the tween loops it calls descend
-    tween.onLoop.add(descend, this);
+//    tween.onLoop.add(descend, this);
 }
 
 function setExplosionAnimation (invader) {
@@ -228,7 +243,7 @@ function collisionHandler (bullet, alien) {
         scoreText.text = scoreString + score;
 
         enemyBullets.callAll('kill',this);
-        stateText.text = " You Won, \n Click to restart";
+        stateText.text = " You Won,\n    Click\n to restart";
         stateText.visible = true;
 
         //the "click to restart" handler
@@ -259,7 +274,7 @@ function enemyHitsPlayer (player,bullet) {
         player.kill();
         enemyBullets.callAll('kill');
 
-        stateText.text=" GAME OVER \n Click to restart";
+        stateText.text=" GAME OVER\n        Click\n    to restart";
         stateText.visible = true;
 
         //the "click to restart" handler

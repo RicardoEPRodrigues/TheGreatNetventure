@@ -33,21 +33,21 @@ Scene.Level0 = function (game) {
 Scene.Level0.prototype = {
 
 
-    preload : function () {
-        "use strict";
-        this.game.load.image('bullet', 'assets/images/static/bullet.png');
-        this.game.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
-        this.game.load.image('ship', 'assets/images/static/player.png');
-
-        this.game.load.spritesheet('invader', 'assets/images/dynamic/invader32x32x4.png', 32, 32);
-        this.game.load.spritesheet('kaboom', 'assets/images/dynamic/explode.png', 128, 128);
-
-        this.game.load.image('starfield', 'assets/images/backgrounds/starfield.png');
-
-    },
+    //    preload : function () {
+    //        "use strict";
+    //        this.game.load.image('bullet', 'assets/images/static/bullet.png');
+    //        this.game.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
+    //        this.game.load.image('ship', 'assets/images/static/player.png');
+    //
+    //        this.game.load.spritesheet('invader', 'assets/images/dynamic/invader32x32x4.png', 32, 32);
+    //        this.game.load.spritesheet('kaboom', 'assets/images/dynamic/explode.png', 128, 128);
+    //
+    //        this.game.load.image('starfield', 'assets/images/backgrounds/starfield.png');
+    //    },
 
     // initialization func
     create : function () {
+        "use strict";
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -95,16 +95,16 @@ Scene.Level0.prototype = {
         this.lives = this.game.add.group();
         this.game.add.text(10, this.game.world.height - 10 - 34, 'Lives : ', { font: '34px Arial', fill: '#fff' });
 
-        for (var i = 0; i < 3; i++) 
-        {
-            var ship = this.lives.create(130 + (30 * i), this.game.world.height - 28, 'ship');
+        var i, ship;
+        for (i = 0; i < 3; i = i + 1) {
+            ship = this.lives.create(130 + (30 * i), this.game.world.height - 28, 'ship');
             ship.anchor.setTo(0.5, 0.5);
             ship.angle = 90;
             ship.alpha = 0.6;
         }
 
         //  Text
-        this.stateText = this.game.add.text(this.game.world.centerX,this.game.world.centerY,' ', { font: '76px Arial', fill: '#fff' });
+        this.stateText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, ' ', { font: '76px Arial', fill: '#fff' });
         this.stateText.anchor.setTo(0.5, 0.5);
         this.stateText.visible = false;
 
@@ -116,9 +116,10 @@ Scene.Level0.prototype = {
         //  And some controls to play the game with
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    } ,
+    },
 
     createAliens : function () {
+        "use strict";
 
         //    for (var y = 0; y < 4; y++)
         //    {
@@ -133,8 +134,9 @@ Scene.Level0.prototype = {
         //            alien.outOfBoundsKill = true;
         //        }
         //    }
-        for (var k = 0; k < 3; k++) {
-            var alien = this.aliens.create(k * 48 * 3, k * 50, 'invader');
+        var k, alien, tween;
+        for (k = 0; k < 3; k = k + 1) {
+            alien = this.aliens.create(k * 48 * 3, k * 50, 'invader');
             alien.anchor.setTo(0.5, 0.5);
             alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
             alien.play('fly');
@@ -142,7 +144,7 @@ Scene.Level0.prototype = {
             alien.checkWorldBounds = true;
             alien.outOfBoundsKill = true;
 
-            var tween = this.game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+            tween = this.game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
             .to({ y: alien.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
             .to({ x: alien.position.x }, 2000, Phaser.Easing.Linear.None)
             .to({ y: alien.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
@@ -160,6 +162,7 @@ Scene.Level0.prototype = {
     },
 
     setExplosionAnimation : function (invader) {
+        "use strict";
 
         invader.anchor.x = 0.5;
         invader.anchor.y = 0.5;
@@ -168,45 +171,39 @@ Scene.Level0.prototype = {
     },
 
     descend : function () {
+        "use strict";
 
         this.aliens.y += 10;
 
     },
 
     update : function () {
-        
+        "use strict";
+
         //  Scroll the background
         this.starfield.tilePosition.y += 6;
 
         //  Reset the player, then check for movement keys
         this.player.body.velocity.setTo(0, 0);
 
-        if (this.cursors.left.isDown)
-        {
+        if (this.cursors.left.isDown) {
             this.player.body.velocity.x = -200;
-        }
-        else if (this.cursors.right.isDown)
-        {
+        } else if (this.cursors.right.isDown) {
             this.player.body.velocity.x = 200;
         }
 
-        if (this.cursors.up.isDown)
-        {
+        if (this.cursors.up.isDown) {
             this.player.body.velocity.y = -200;
-        }
-        else if (this.cursors.down.isDown)
-        {
+        } else if (this.cursors.down.isDown) {
             this.player.body.velocity.y = 200;
         }
 
         //  Firing?
-        if (this.fireButton.isDown)
-        {
+        if (this.fireButton.isDown) {
             this.fireBullet();
         }
 
-        if (this.game.time.now > this.firingTimer)
-        {
+        if (this.game.time.now > this.firingTimer) {
             this.enemyFires();
         }
 
@@ -217,6 +214,7 @@ Scene.Level0.prototype = {
     },
 
     render : function () {
+        "use strict";
 
         // for (var i = 0; i < this.aliens.length; i++)
         // {
@@ -226,6 +224,7 @@ Scene.Level0.prototype = {
     },
 
     collisionHandler : function (bullet, alien) {
+        "use strict";
 
         //  When a bullet hits an alien we kill them both
         bullet.kill();
@@ -240,59 +239,57 @@ Scene.Level0.prototype = {
         explosion.reset(alien.body.x, alien.body.y);
         explosion.play('kaboom', 30, false, true);
 
-        if (this.aliens.countLiving() == 0)
-        {
+        if (this.aliens.countLiving() === 0) {
             this.score += 1000;
             this.scoreText.text = this.scoreString + this.score;
 
-            this.enemyBullets.callAll('kill',this);
+            this.enemyBullets.callAll('kill', this);
             this.stateText.text = " You Won,\n    Click\n to restart";
             this.stateText.visible = true;
 
             //the "click to restart" handler
-            this.game.input.onTap.addOnce(this.restart,this);
+            this.game.input.onTap.addOnce(this.restart, this);
         }
 
     },
 
-    enemyHitsPlayer : function (player,bullet) {
+    enemyHitsPlayer : function (player, bullet) {
+        "use strict";
 
         bullet.kill();
 
-        live = this.lives.getFirstAlive();
+        var live = this.lives.getFirstAlive(), explosion;
 
-        if (live)
-        {
+        if (live) {
             live.kill();
         }
 
         //  And create an explosion :)
-        var explosion = this.explosions.getFirstExists(false);
+        explosion = this.explosions.getFirstExists(false);
         explosion.reset(this.player.body.x, this.player.body.y);
         explosion.play('kaboom', 30, false, true);
 
         // When the player dies
-        if (this.lives.countLiving() < 1)
-        {
+        if (this.lives.countLiving() < 1) {
             this.player.kill();
             this.enemyBullets.callAll('kill');
 
-            this.stateText.text=" GAME OVER\n        Click\n    to restart";
+            this.stateText.text = " GAME OVER\n        Click\n    to restart";
             this.stateText.visible = true;
 
             //the "click to restart" handler
-            this.game.input.onTap.addOnce(this.restart,this);
+            this.game.input.onTap.addOnce(this.restart, this);
         }
 
     },
 
     enemyFires : function () {
+        "use strict";
 
         //  Grab the first bullet we can from the pool
-        var enemyBullet = this.enemyBullets.getFirstExists(false);
+        var enemyBullet = this.enemyBullets.getFirstExists(false), livingEnemies = [], random, shooter;
 
-        var livingEnemies = [];
-        this.aliens.forEachAlive(function(alien){
+        this.aliens.forEachAlive(function (alien) {
 
             // put every living enemy in an array
             livingEnemies.push(alien);
@@ -300,35 +297,38 @@ Scene.Level0.prototype = {
         this.livingEnemies = livingEnemies;
 
 
-        if (enemyBullet && this.livingEnemies.length > 0)
-        {
+        if (enemyBullet && this.livingEnemies.length > 0) {
 
-            var random=this.game.rnd.integerInRange(0,this.livingEnemies.length-1);
+            random = this.game.rnd.integerInRange(0, this.livingEnemies.length - 1);
 
             // randomly select one of them
-            var shooter=this.livingEnemies[random];
+            shooter = this.livingEnemies[random];
             // And fire the bullet from this enemy
             enemyBullet.reset(shooter.body.x, shooter.body.y);
 
-            this.game.physics.arcade.moveToObject(enemyBullet,this.player,120);
+            this.game.physics.arcade.moveToObject(enemyBullet, this.player, 120);
             this.firingTimer = this.game.time.now + 2000;
         }
 
     },
 
     fireBullet : function () {
+        "use strict";
 
         //  To avoid them being allowed to fire too fast we set a time limit
-        if (this.game.time.now - this.lastBulletShotAt < this.bulletDelay) return;
+        if (this.game.time.now - this.lastBulletShotAt < this.bulletDelay) {
+            return;
+        }
         this.lastBulletShotAt = this.game.time.now;
 
-        if(this.bullets.countLiving() > this.numberOfBullets ) return;
+        if (this.bullets.countLiving() > this.numberOfBullets) {
+            return;
+        }
 
         //  Grab the first bullet we can from the pool
         var bullet = this.bullets.getFirstExists(false);
 
-        if (bullet)
-        {
+        if (bullet) {
             //  And fire it
             bullet.reset(this.player.x, this.player.y + 8);
             bullet.body.velocity.x = 0;
@@ -338,6 +338,7 @@ Scene.Level0.prototype = {
     },
 
     resetBullet : function (bullet) {
+        "use strict";
 
         //  Called if the bullet goes out of the screen
         bullet.kill();
@@ -345,6 +346,7 @@ Scene.Level0.prototype = {
     },
 
     restart : function () {
+        "use strict";
 
         //  A new level starts
 
@@ -361,4 +363,4 @@ Scene.Level0.prototype = {
 
     }
 
-}
+};

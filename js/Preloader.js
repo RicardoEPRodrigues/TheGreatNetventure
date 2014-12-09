@@ -19,6 +19,8 @@ Scene.Preloader.prototype = {
         this.load.spritesheet('kaboom', 'assets/images/dynamic/explode.png', 128, 128);
         
         this.load.image('starfield', 'assets/images/backgrounds/starfield.png');
+        
+        this.load.spritesheet('basicButton', 'assets/images/buttons/basic_button.png', 193, 71);
     },
     create: function () {
         "use strict";

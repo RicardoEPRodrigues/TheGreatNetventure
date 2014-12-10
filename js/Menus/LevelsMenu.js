@@ -13,7 +13,7 @@ Scene.LevelsMenu.prototype = {
         var i, j, button;
         for (i = 0; i < 3; i = i + 1) {
             for (j = 0; j < 3; j = j + 1) {
-                button = this.game.add.button(20 + (i * 190), 100 + (j * 100), 'basicButton', this.selectOnUp, this, 2, 1, 0);
+                button = this.game.add.button(20 + (j * 190), 100 + (i * 100), 'basicButton', this.selectOnUp, this, 2, 1, 0);
                 button.indexNum = (i * 3) + j;
                 this.levelButtons.push(button);
             }

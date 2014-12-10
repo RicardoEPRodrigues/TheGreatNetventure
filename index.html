@@ -9,7 +9,8 @@
         <script src="js/Menus/MainMenu.js" type="text/javascript"></script>
         <script src="js/Menus/LevelsMenu.js" type="text/javascript"></script>
         <script src="js/Misc/EnemyGenerator.js" type="text/javascript"></script>
-        <script src="js/Level0.js" type="text/javascript"></script>
+        <script src="js/Levels/Level0.js" type="text/javascript"></script>
+        <script src="js/Levels/Level1.js" type="text/javascript"></script>
     </head>
     <body>
 
@@ -25,6 +26,7 @@
                 game.state.add('LevelsMenu', Scene.LevelsMenu);
                 
                 game.state.add('Level0', Scene.Level0); // scene to start the game.
+                game.state.add('Level1', Scene.Level1); // scene to start the game.
                 
                 game.state.start('Boot'); // Go to Boot scene (start the game)
             })();

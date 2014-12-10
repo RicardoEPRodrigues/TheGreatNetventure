@@ -1,12 +1,12 @@
-function Level1(game) {
+Scene.Level1 = function (game) {
     "use strict";
-    Level0.call(this, game);
-}
+    Scene.Level0.call(this, game);
+};
 
-Level1.prototype = Object.create(Level0.prototype);
-Level1.prototype.constructor = Level1;
+Scene.Level1.prototype = Object.create(Scene.Level0.prototype);
+Scene.Level1.prototype.constructor = Scene.Level1;
 
-Level1.prototype.updateMalwares = function () {
+Scene.Level1.prototype.updateMalwares = function () {
     "use strict";
     // insert code here
     var k, alien, tween;

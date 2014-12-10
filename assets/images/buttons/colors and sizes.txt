@@ -1,0 +1,33 @@
+https://dabuttonfactory.com/
+blues
+4476cc
+223388
+
+yellow
+ffee00
+
+reds
+cc4646
+4d0a0a
+
+
+--------
+button
+75 x 75
+225
+
+play
+112 x 69
+336
+
+back
+124 x 69
+312
+
+malwares
+134 x 68
+402
+
+protections
+170 x 69
+510

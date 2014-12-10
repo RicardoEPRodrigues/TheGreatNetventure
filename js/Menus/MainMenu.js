@@ -11,9 +11,12 @@ Scene.MainMenu.prototype = {
     create: function () {
         "use strict";
         this.starfield = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'starfield');
-        this.playButton = this.game.add.button(this.game.world.centerX - 95, 200, 'basicButton', this.playOnUp, this, 2, 1, 0);
-        this.virusButton = this.game.add.button(this.game.world.centerX - 95, 300, 'basicButton', this.protectionOnUp, this, 2, 1, 0);
-        this.protectionButton = this.game.add.button(this.game.world.centerX - 95, 400, 'basicButton', this.malwareOnUp, this, 2, 1, 0);
+        this.playButton = this.game.add.button(this.game.world.centerX, 200, 'playButton', this.playOnUp, this, 1, 0, 2);
+        this.playButton.anchor.set(0.5, 0.5);
+        this.virusButton = this.game.add.button(this.game.world.centerX, 300, 'malwareButton', this.protectionOnUp, this, 1, 0, 2);
+        this.virusButton.anchor.set(0.5, 0.5);
+        this.protectionButton = this.game.add.button(this.game.world.centerX, 400, 'protectionButton', this.malwareOnUp, this, 1, 0, 2);
+        this.protectionButton.anchor.set(0.5, 0.5);
     },
 
     playOnUp : function (button, pointer, isOver) {

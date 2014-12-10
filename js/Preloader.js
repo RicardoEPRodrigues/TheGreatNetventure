@@ -21,6 +21,11 @@ Scene.Preloader.prototype = {
         this.load.image('starfield', 'assets/images/backgrounds/starfield.png');
         
         this.load.spritesheet('basicButton', 'assets/images/buttons/basic_button.png', 193, 71);
+        this.load.spritesheet('playButton', 'assets/images/buttons/play.png', 112, 69);
+        this.load.spritesheet('backButton', 'assets/images/buttons/back.png', 124, 69);
+        this.load.spritesheet('malwareButton', 'assets/images/buttons/malware.png', 134, 68);
+        this.load.spritesheet('protectionButton', 'assets/images/buttons/protection.png', 170, 69);
+        this.load.spritesheet('button', 'assets/images/buttons/button.png', 75, 75);
     },
     create: function () {
         "use strict";

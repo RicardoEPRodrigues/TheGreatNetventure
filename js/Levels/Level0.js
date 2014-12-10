@@ -32,6 +32,8 @@ Scene.Level0 = function (game) {
     this.gameObjGenerator = null;
 
     this.counter = 0;
+
+    this.minTimeToWin = 5;
 };
 
 Scene.Level0.prototype = {
@@ -160,6 +162,7 @@ Scene.Level0.prototype = {
         this.game.physics.arcade.overlap(this.bullets, this.aliens, this.collisionHandler, null, this);
         this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.enemyHitsPlayer, null, this);
 
+        this.checkWin();
     },
 
     render : function () {
@@ -170,6 +173,21 @@ Scene.Level0.prototype = {
         //     this.game.debug.body(this.aliens.children[i]);
         // }
 
+    },
+
+    checkWin : function () {
+        if (this.aliens.countLiving() === 0) {
+            if (this.counter >= this.minTimeToWin) {
+                this.enemyBullets.callAll('kill', this);
+                this.stateText.text = " You Won,\n    Click\n to restart";
+                this.stateText.visible = true;
+
+                this.enemyBullets.callAll('kill');
+
+                //the "click to restart" handler
+                this.game.input.onTap.addOnce(this.restart, this);
+            }
+        }
     },
 
     collisionHandler : function (bullet, alien) {
@@ -188,20 +206,21 @@ Scene.Level0.prototype = {
         explosion.reset(alien.body.x, alien.body.y);
         explosion.play('kaboom', 30, false, true);
 
-        if (this.aliens.countLiving() === 0) {
-            this.score += 1000;
-            this.scoreText.text = this.scoreString + this.score;
+        //        if (this.aliens.countLiving() === 0) {
+        //            //            this.score += 1000;
+        //            this.scoreText.text = this.scoreString + this.score;
+        //
+        //            this.enemyBullets.callAll('kill', this);
+        //            this.stateText.text = " You Won,\n    Click\n to restart";
+        //            this.stateText.visible = true;
+        //
+        //            this.enemyBullets.callAll('kill');
+        //
+        //            //the "click to restart" handler
+        //            this.game.input.onTap.addOnce(this.restart, this);
+        //        }
 
-            this.enemyBullets.callAll('kill', this);
-            this.stateText.text = " You Won,\n    Click\n to restart";
-            this.stateText.visible = true;
-
-            this.enemyBullets.callAll('kill');
-
-            //the "click to restart" handler
-            this.game.input.onTap.addOnce(this.restart, this);
-        }
-
+//        this.checkWin();
     },
 
     enemyHitsPlayer : function (player, bullet) {
@@ -233,6 +252,8 @@ Scene.Level0.prototype = {
         }
 
     },
+
+
 
     enemyFires : function () {
         "use strict";
@@ -309,7 +330,7 @@ Scene.Level0.prototype = {
         this.lives.callAll('revive');
         //  And brings the aliens back from the dead :)
         this.aliens.removeAll();
-        this.createAliens();
+//        this.createAliens();
         this.enemyBullets.callAll('kill');
 
         //revives the player
@@ -324,8 +345,8 @@ Scene.Level0.prototype = {
         // insert code here
         var k, alien, tween;
 
-//        console.log(this.counter);
-        
+        //        console.log(this.counter);
+
         if (this.counter === 1) {
             for (k = 0; k < 3; k = k + 1) {
                 alien = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);

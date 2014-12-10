@@ -28,22 +28,13 @@ Scene.Level0 = function (game) {
     this.scoreText = null;
     this.lives = null;
     this.stateText = null;
+
+    this.gameObjGenerator = null;
+
+    this.counter = 0;
 };
 
 Scene.Level0.prototype = {
-
-
-    //    preload : function () {
-    //        "use strict";
-    //        this.game.load.image('bullet', 'assets/images/static/bullet.png');
-    //        this.game.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
-    //        this.game.load.image('ship', 'assets/images/static/player.png');
-    //
-    //        this.game.load.spritesheet('invader', 'assets/images/dynamic/invader32x32x4.png', 32, 32);
-    //        this.game.load.spritesheet('kaboom', 'assets/images/dynamic/explode.png', 128, 128);
-    //
-    //        this.game.load.image('starfield', 'assets/images/backgrounds/starfield.png');
-    //    },
 
     // initialization func
     create : function () {
@@ -52,7 +43,9 @@ Scene.Level0.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //  The scrolling starfield background
-        this.starfield = this.game.add.tileSprite(0, 0, 500, 600, 'starfield');
+        this.starfield = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'starfield');
+
+        this.gameObjGenerator = new EnemyGenerator(this.game);
 
         //  Our bullet group
         this.bullets = this.game.add.group();
@@ -82,9 +75,6 @@ Scene.Level0.prototype = {
 
         //  The baddies!
         this.aliens = this.game.add.group();
-        this.aliens.enableBody = true;
-        this.aliens.physicsBodyType = Phaser.Physics.ARCADE;
-        this.createAliens();
 
         //  The score
         this.scoreString = 'Score : ';
@@ -116,49 +106,8 @@ Scene.Level0.prototype = {
         //  And some controls to play the game with
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    },
 
-    createAliens : function () {
-        "use strict";
-
-        //    for (var y = 0; y < 4; y++)
-        //    {
-        //        for (var x = 0; x < 10; x++)
-        //        {
-        //            var alien = aliens.create(x * 48, y * 50, 'invader');
-        //            alien.anchor.setTo(0.5, 0.5);
-        //            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
-        //            alien.play('fly');
-        //            alien.body.moves = false;
-        //            alien.checkWorldBounds = true;
-        //            alien.outOfBoundsKill = true;
-        //        }
-        //    }
-        var k, alien, tween;
-        for (k = 0; k < 3; k = k + 1) {
-            alien = this.aliens.create(k * 48 * 3, k * 50, 'invader');
-            alien.anchor.setTo(0.5, 0.5);
-            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
-            alien.play('fly');
-            alien.body.moves = false;
-            alien.checkWorldBounds = true;
-            alien.outOfBoundsKill = true;
-
-            tween = this.game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
-            .to({ y: alien.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
-            .to({ x: alien.position.x }, 2000, Phaser.Easing.Linear.None)
-            .to({ y: alien.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
-            .start();
-        }
-
-        this.aliens.x = 100;
-        this.aliens.y = 50;
-
-        //  All this does is basically start the invaders moving. Notice we're moving the Group they belong to, rather than the invaders directly.
-        //    var tween = game.add.tween(aliens).to( { x: 200 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-
-        //  When the tween loops it calls descend
-        //    tween.onLoop.add(descend, this);
+        this.game.time.events.loop(Phaser.Timer.SECOND, this.updateMalwares, this);
     },
 
     setExplosionAnimation : function (invader) {
@@ -247,6 +196,8 @@ Scene.Level0.prototype = {
             this.stateText.text = " You Won,\n    Click\n to restart";
             this.stateText.visible = true;
 
+            this.enemyBullets.callAll('kill');
+
             //the "click to restart" handler
             this.game.input.onTap.addOnce(this.restart, this);
         }
@@ -285,6 +236,10 @@ Scene.Level0.prototype = {
 
     enemyFires : function () {
         "use strict";
+
+        if (this.lives.countLiving() === 0) {
+            return;
+        }
 
         //  Grab the first bullet we can from the pool
         var enemyBullet = this.enemyBullets.getFirstExists(false), livingEnemies = [], random, shooter;
@@ -355,12 +310,43 @@ Scene.Level0.prototype = {
         //  And brings the aliens back from the dead :)
         this.aliens.removeAll();
         this.createAliens();
+        this.enemyBullets.callAll('kill');
 
         //revives the player
         this.player.revive();
         //hides the text
         this.stateText.visible = false;
 
+    },
+
+    updateMalwares : function () {
+        "use strict";
+        // insert code here
+        var k, alien, tween;
+
+//        console.log(this.counter);
+        
+        if (this.counter === 1) {
+            for (k = 0; k < 3; k = k + 1) {
+                alien = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
+                this.aliens.add(alien);
+                //            alien = this.aliens.create(k * 48 * 3, k * 50, 'invader');
+                //            alien.anchor.setTo(0.5, 0.5);
+                //            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
+                //            alien.play('fly');
+                //            alien.body.moves = false;
+                //            alien.checkWorldBounds = true;
+                //            alien.outOfBoundsKill = true;
+
+                tween = this.game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+                .to({ y: alien.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
+                .to({ x: alien.position.x }, 2000, Phaser.Easing.Linear.None)
+                .to({ y: alien.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
+                .start();
+            }
+        }
+
+        this.counter = this.counter + 1;
     }
 
 };

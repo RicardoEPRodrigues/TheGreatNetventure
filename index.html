@@ -6,7 +6,9 @@
         <script src="js/Phaser/phaser.min.js" type="text/javascript"></script>
         <script src="js/Boot.js" type="text/javascript"></script>
         <script src="js/Preloader.js" type="text/javascript"></script>
-        <script src="js/MainMenu.js" type="text/javascript"></script>
+        <script src="js/Menus/MainMenu.js" type="text/javascript"></script>
+        <script src="js/Menus/LevelsMenu.js" type="text/javascript"></script>
+        <script src="js/Misc/EnemyGenerator.js" type="text/javascript"></script>
         <script src="js/Level0.js" type="text/javascript"></script>
     </head>
     <body>
@@ -20,6 +22,7 @@
                 game.state.add('Boot', Scene.Boot); // scene to start loading game assets.
                 game.state.add('Preloader', Scene.Preloader); // loading game assets
                 game.state.add('MainMenu', Scene.MainMenu); // fist proper game screen
+                game.state.add('LevelsMenu', Scene.LevelsMenu);
                 
                 game.state.add('Level0', Scene.Level0); // scene to start the game.
                 

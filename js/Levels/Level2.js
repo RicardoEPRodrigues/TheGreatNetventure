@@ -1,20 +1,20 @@
-Scene.Level1 = function (game) {
+Scene.Level2 = function (game) {
     "use strict";
     Scene.Level0.call(this, game);
     this.minTimeToWin = 24;
 };
 
-Scene.Level1.prototype = Object.create(Scene.Level0.prototype);
-Scene.Level1.prototype.constructor = Scene.Level1;
+Scene.Level2.prototype = Object.create(Scene.Level0.prototype);
+Scene.Level2.prototype.constructor = Scene.Level2;
 
-Scene.Level1.prototype.createAliens = function () {
+Scene.Level2.prototype.createAliens = function () {
     "use strict";
     // insert code here
     var k, alien, tween;
 
     //        console.log(this.counter);
 
-    if (this.counter === 1 || this.counter === 15) {
+    if (this.counter > 1 && this.counter % 5 === 0) {
         for (k = 0; k < 3; k = k + 1) {
             alien = this.gameObjGenerator.getBasicVirus(k * 100 + 150, 0);
             this.aliens.add(alien);
@@ -36,7 +36,7 @@ Scene.Level1.prototype.createAliens = function () {
         }
     }
     
-    if (this.counter === 8 || this.counter === 22) {
+    if (this.counter > 1 && (this.counter % 3 === 0 || this.counter % 10 === 0)) {
         for (k = 0; k < 3; k = k + 1) {
             alien = this.gameObjGenerator.getBasicVirus(k * 100 + 150, 0);
             this.aliens.add(alien);

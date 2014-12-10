@@ -34,6 +34,8 @@ Scene.Level0 = function (game) {
     this.counter = 0;
 
     this.minTimeToWin = 5;
+
+    this.won = false;
 };
 
 Scene.Level0.prototype = {
@@ -178,17 +180,20 @@ Scene.Level0.prototype = {
     checkWin : function () {
         if (this.aliens.countLiving() === 0) {
             if (this.counter >= this.minTimeToWin) {
-                this.enemyBullets.callAll('kill', this);
+                this.enemyBullets.callAll('kill');
 
-                if (this.score === 0) {
-                    this.score += 1000;
-                }
-                
-                if(this.lives.countLiving() == 3) {
-                    this.score += 50;
-                }
+                if(!this.won) {
+                    if (this.score === 0) {
+                        this.score += 1000;
+                    }
 
-                this.scoreText.text = this.scoreString + this.score;
+                    if(this.lives.countLiving() == 3) {
+                        this.score += 50;
+                    }
+
+                    this.scoreText.text = this.scoreString + this.score;
+                    this.won = true;
+                }
 
                 this.stateText.text = " You Won,\n    Click\n   to Exit";
                 this.stateText.visible = true;
@@ -214,22 +219,6 @@ Scene.Level0.prototype = {
         var explosion = this.explosions.getFirstExists(false);
         explosion.reset(alien.body.x, alien.body.y);
         explosion.play('kaboom', 30, false, true);
-
-        //        if (this.aliens.countLiving() === 0) {
-        //            //            this.score += 1000;
-        //            this.scoreText.text = this.scoreString + this.score;
-        //
-        //            this.enemyBullets.callAll('kill', this);
-        //            this.stateText.text = " You Won,\n    Click\n to restart";
-        //            this.stateText.visible = true;
-        //
-        //            this.enemyBullets.callAll('kill');
-        //
-        //            //the "click to restart" handler
-        //            this.game.input.onTap.addOnce(this.restart, this);
-        //        }
-
-        //        this.checkWin();
     },
 
     enemyHitsPlayer : function (player, bullet) {
@@ -347,18 +336,28 @@ Scene.Level0.prototype = {
         //hides the text
         this.stateText.visible = false;
 
+        this.score = 0;
+        this.scoreText.text = this.scoreString + this.score;
+
         this.counter = 0;
+
+        this.won = false;
 
         this.game.state.start('LevelsMenu');
     },
 
     updateMalwares : function () {
         "use strict";
-        // insert code here
+
+        if(!this.won) {
+            this.createAliens();
+        }
+
+        this.counter = this.counter + 1;
+    },
+
+    createAliens : function () {
         var k, alien, tween;
-
-        //        console.log(this.counter);
-
         if (this.counter === 1) {
             for (k = 0; k < 3; k = k + 1) {
                 alien = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
@@ -378,8 +377,6 @@ Scene.Level0.prototype = {
                 .start();
             }
         }
-
-        this.counter = this.counter + 1;
     }
 
 };

@@ -179,13 +179,13 @@ Scene.Level0.prototype = {
         if (this.aliens.countLiving() === 0) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill', this);
-                this.stateText.text = " You Won,\n    Click\n to restart";
+                this.stateText.text = " You Won,\n    Click\n   to Exit";
                 this.stateText.visible = true;
 
                 this.enemyBullets.callAll('kill');
 
                 //the "click to restart" handler
-                this.game.input.onTap.addOnce(this.restart, this);
+                this.game.input.onTap.addOnce(this.quit, this);
             }
         }
     },
@@ -320,6 +320,10 @@ Scene.Level0.prototype = {
         bullet.kill();
 
     },
+    
+    quit : function () {
+        this.game.state.start('LevelsMenu');
+    },
 
     restart : function () {
         "use strict";
@@ -337,6 +341,8 @@ Scene.Level0.prototype = {
         this.player.revive();
         //hides the text
         this.stateText.visible = false;
+        
+        this.counter = 0;
 
     },
 

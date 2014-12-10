@@ -179,13 +179,22 @@ Scene.Level0.prototype = {
         if (this.aliens.countLiving() === 0) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill', this);
+
+                if (this.score === 0) {
+                    this.score += 1000;
+                }
+                
+                if(this.lives.countLiving() == 3) {
+                    this.score += 50;
+                }
+
+                this.scoreText.text = this.scoreString + this.score;
+
                 this.stateText.text = " You Won,\n    Click\n   to Exit";
                 this.stateText.visible = true;
 
-                this.enemyBullets.callAll('kill');
-
                 //the "click to restart" handler
-                this.game.input.onTap.addOnce(this.quit, this);
+                this.game.input.onTap.addOnce(this.restart, this);
             }
         }
     },
@@ -220,7 +229,7 @@ Scene.Level0.prototype = {
         //            this.game.input.onTap.addOnce(this.restart, this);
         //        }
 
-//        this.checkWin();
+        //        this.checkWin();
     },
 
     enemyHitsPlayer : function (player, bullet) {
@@ -320,10 +329,6 @@ Scene.Level0.prototype = {
         bullet.kill();
 
     },
-    
-    quit : function () {
-        this.game.state.start('LevelsMenu');
-    },
 
     restart : function () {
         "use strict";
@@ -334,16 +339,17 @@ Scene.Level0.prototype = {
         this.lives.callAll('revive');
         //  And brings the aliens back from the dead :)
         this.aliens.removeAll();
-//        this.createAliens();
+        //        this.createAliens();
         this.enemyBullets.callAll('kill');
 
         //revives the player
         this.player.revive();
         //hides the text
         this.stateText.visible = false;
-        
+
         this.counter = 0;
 
+        this.game.state.start('LevelsMenu');
     },
 
     updateMalwares : function () {

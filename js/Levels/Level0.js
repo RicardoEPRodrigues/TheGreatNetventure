@@ -2,7 +2,7 @@ Scene.Level0 = function (game) {
     "use strict";
     // characters info
     this.player = null;
-    this.aliens = null;
+    this.malwares = null;
 
     this.livingEnemies = [];
 
@@ -61,13 +61,13 @@ Scene.Level0.prototype = {
             bullet.kill();
             this.bullets.add(bullet);
         }
-//        this.bullets.enableBody = true;
-//        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-//        this.bullets.createMultiple(30, 'bullet');
-//        this.bullets.setAll('anchor.x', 0.5);
-//        this.bullets.setAll('anchor.y', 1);
-//        this.bullets.setAll('outOfBoundsKill', true);
-//        this.bullets.setAll('checkWorldBounds', true);
+        //        this.bullets.enableBody = true;
+        //        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        //        this.bullets.createMultiple(30, 'bullet');
+        //        this.bullets.setAll('anchor.x', 0.5);
+        //        this.bullets.setAll('anchor.y', 1);
+        //        this.bullets.setAll('outOfBoundsKill', true);
+        //        this.bullets.setAll('checkWorldBounds', true);
 
         // The enemy's bullets
         this.enemyBullets = this.game.add.group();
@@ -86,7 +86,7 @@ Scene.Level0.prototype = {
         this.player.body.collideWorldBounds = true;
 
         //  The baddies!
-        this.aliens = this.game.add.group();
+        this.malwares = this.game.add.group();
 
         //  The score
         this.scoreString = 'Score : ';
@@ -133,7 +133,7 @@ Scene.Level0.prototype = {
     descend : function () {
         "use strict";
 
-        this.aliens.y += 10;
+        this.malwares.y += 10;
 
     },
 
@@ -169,8 +169,9 @@ Scene.Level0.prototype = {
             }
 
             //  Run collision
-            this.game.physics.arcade.overlap(this.bullets, this.aliens, this.collisionHandler, null, this);
-            this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.enemyHitsPlayer, null, this);
+            this.game.physics.arcade.overlap(this.bullets, this.malwares, this.collisionHandler, null, this);
+            this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.enemyBulletHitsPlayer, null, this);
+            this.game.physics.arcade.overlap(this.malwares, this.player, this.enemyHitsPlayer, null, this);
 
             this.checkWin();
         }
@@ -179,16 +180,16 @@ Scene.Level0.prototype = {
     render : function () {
         "use strict";
 
-        // for (var i = 0; i < this.aliens.length; i++)
+        // for (var i = 0; i < this.malwares.length; i++)
         // {
-        //     this.game.debug.body(this.aliens.children[i]);
+        //     this.game.debug.body(this.malwares.children[i]);
         // }
 
     },
 
     checkWin : function () {
         "use strict";
-        if (this.aliens.countLiving() === 0 && this.lives.countLiving() !== 0) {
+        if (this.malwares.countLiving() === 0 && this.lives.countLiving() !== 0) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill');
 
@@ -204,6 +205,8 @@ Scene.Level0.prototype = {
                     this.scoreText.text = this.scoreString + this.score;
                     this.won = true;
                 }
+                
+                this.active = false;
 
                 this.stateText.text = " You Won,\n    Click\n   to Exit";
                 this.stateText.visible = true;
@@ -213,42 +216,13 @@ Scene.Level0.prototype = {
             }
         }
     },
-
-    collisionHandler : function (bullet, alien) {
+    
+    checkDeath : function () {
         "use strict";
-
-        //  When a bullet hits an alien we kill them both
-        bullet.kill();
-        alien.kill();
-
-        //  Increase the score
-        this.score += 20;
-        this.scoreText.text = this.scoreString + this.score;
-
-        //  And create an explosion :)
-        var explosion = this.explosions.getFirstExists(false);
-        explosion.reset(alien.body.x, alien.body.y);
-        explosion.play('kaboom', 30, false, true);
-    },
-
-    enemyHitsPlayer : function (player, bullet) {
-        "use strict";
-
-        bullet.kill();
-
-        var live = this.lives.getFirstAlive(), explosion;
-
-        if (live) {
-            live.kill();
-        }
-
-        //  And create an explosion :)
-        explosion = this.explosions.getFirstExists(false);
-        explosion.reset(this.player.body.x, this.player.body.y);
-        explosion.play('kaboom', 30, false, true);
 
         // When the player dies
         if (this.lives.countLiving() < 1) {
+            this.active = false;
             this.player.kill();
             this.enemyBullets.callAll('kill');
 
@@ -258,10 +232,58 @@ Scene.Level0.prototype = {
             //the "click to restart" handler
             this.game.input.onTap.addOnce(this.restart, this);
         }
+    },
+    
+    killPlayer : function () {
+        "use strict";
+        var live = this.lives.getFirstAlive(), explosion;
+        
+        if (live) {
+            live.kill();
+        }
+
+        //  And create an explosion :)
+        explosion = this.explosions.getFirstExists(false);
+        explosion.reset(this.player.body.x, this.player.body.y);
+        explosion.play('kaboom', 30, false, true);
+        
+        this.checkDeath();
+    },
+
+    collisionHandler : function (bullet, malware) {
+        "use strict";
+
+        //  When a bullet hits an malware we kill them both
+        bullet.kill();
+        malware.kill();
+
+        //  Increase the score
+        this.score += 20;
+        this.scoreText.text = this.scoreString + this.score;
+
+        //  And create an explosion :)
+        var explosion = this.explosions.getFirstExists(false);
+        explosion.reset(malware.body.x, malware.body.y);
+        explosion.play('kaboom', 30, false, true);
+    },
+
+    enemyBulletHitsPlayer : function (player, bullet) {
+        "use strict";
+
+        bullet.kill();
+
+        this.killPlayer();
 
     },
 
+    enemyHitsPlayer : function (player, malware) {
+        "use strict";
 
+        malware.kill();
+
+        this.killPlayer();
+
+    },
 
     enemyFires : function () {
         "use strict";
@@ -273,10 +295,10 @@ Scene.Level0.prototype = {
         //  Grab the first bullet we can from the pool
         var enemyBullet = this.enemyBullets.getFirstExists(false), livingEnemies = [], random, shooter;
 
-        this.aliens.forEachAlive(function (alien) {
+        this.malwares.forEachAlive(function (malware) {
 
             // put every living enemy in an array
-            livingEnemies.push(alien);
+            livingEnemies.push(malware);
         });
         this.livingEnemies = livingEnemies;
 
@@ -336,9 +358,9 @@ Scene.Level0.prototype = {
 
         //resets the life count
         this.lives.callAll('revive');
-        //  And brings the aliens back from the dead :)
-        this.aliens.removeAll();
-        //        this.createAliens();
+        //  And brings the malwares back from the dead :)
+        this.malwares.removeAll();
+        //        this.createMalwares();
         this.enemyBullets.callAll('kill');
 
         //revives the player
@@ -352,6 +374,8 @@ Scene.Level0.prototype = {
         this.counter = 0;
 
         this.won = false;
+        
+        this.active = true;
 
         this.game.state.start('LevelsMenu');
     },
@@ -362,31 +386,31 @@ Scene.Level0.prototype = {
             return;
         }
         if (!this.won) {
-            this.createAliens();
+            this.createMalwares();
         }
 
         this.counter = this.counter + 1;
     },
 
-    createAliens : function () {
+    createMalwares : function () {
         "use strict";
-        var k, alien, tween;
+        var k, malware, tween;
         if (this.counter === 1) {
             for (k = 0; k < 3; k = k + 1) {
-                alien = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
-                this.aliens.add(alien);
-                //            alien = this.aliens.create(k * 48 * 3, k * 50, 'invader');
-                //            alien.anchor.setTo(0.5, 0.5);
-                //            alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
-                //            alien.play('fly');
-                //            alien.body.moves = false;
-                //            alien.checkWorldBounds = true;
-                //            alien.outOfBoundsKill = true;
+                malware = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
+                this.malwares.add(malware);
+                //            malware = this.malwares.create(k * 48 * 3, k * 50, 'invader');
+                //            malware.anchor.setTo(0.5, 0.5);
+                //            malware.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
+                //            malware.play('fly');
+                //            malware.body.moves = false;
+                //            malware.checkWorldBounds = true;
+                //            malware.outOfBoundsKill = true;
 
-                tween = this.game.add.tween(alien).to({ x: alien.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
-                .to({ y: alien.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
-                .to({ x: alien.position.x }, 2000, Phaser.Easing.Linear.None)
-                .to({ y: alien.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
+                tween = this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+                .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
+                .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
+                .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
                 .start();
             }
         }

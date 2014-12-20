@@ -36,6 +36,8 @@ Scene.Level0 = function (game) {
     this.minTimeToWin = 5;
 
     this.won = false;
+
+    this.active = true;
 };
 
 Scene.Level0.prototype = {
@@ -136,35 +138,37 @@ Scene.Level0.prototype = {
         //  Scroll the background
         this.starfield.tilePosition.y += 6;
 
-        //  Reset the player, then check for movement keys
-        this.player.body.velocity.setTo(0, 0);
+        if (this.active) {
+            //  Reset the player, then check for movement keys
+            this.player.body.velocity.setTo(0, 0);
 
-        if (this.cursors.left.isDown) {
-            this.player.body.velocity.x = -200;
-        } else if (this.cursors.right.isDown) {
-            this.player.body.velocity.x = 200;
+            if (this.cursors.left.isDown) {
+                this.player.body.velocity.x = -200;
+            } else if (this.cursors.right.isDown) {
+                this.player.body.velocity.x = 200;
+            }
+
+            if (this.cursors.up.isDown) {
+                this.player.body.velocity.y = -200;
+            } else if (this.cursors.down.isDown) {
+                this.player.body.velocity.y = 200;
+            }
+
+            //  Firing?
+            if (this.fireButton.isDown) {
+                this.fireBullet();
+            }
+
+            if (this.game.time.now > this.firingTimer) {
+                this.enemyFires();
+            }
+
+            //  Run collision
+            this.game.physics.arcade.overlap(this.bullets, this.aliens, this.collisionHandler, null, this);
+            this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.enemyHitsPlayer, null, this);
+
+            this.checkWin();
         }
-
-        if (this.cursors.up.isDown) {
-            this.player.body.velocity.y = -200;
-        } else if (this.cursors.down.isDown) {
-            this.player.body.velocity.y = 200;
-        }
-
-        //  Firing?
-        if (this.fireButton.isDown) {
-            this.fireBullet();
-        }
-
-        if (this.game.time.now > this.firingTimer) {
-            this.enemyFires();
-        }
-
-        //  Run collision
-        this.game.physics.arcade.overlap(this.bullets, this.aliens, this.collisionHandler, null, this);
-        this.game.physics.arcade.overlap(this.enemyBullets, this.player, this.enemyHitsPlayer, null, this);
-
-        this.checkWin();
     },
 
     render : function () {
@@ -178,16 +182,17 @@ Scene.Level0.prototype = {
     },
 
     checkWin : function () {
-        if (this.aliens.countLiving() === 0) {
+        "use strict";
+        if (this.aliens.countLiving() === 0 && this.lives.countLiving() !== 0) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill');
 
-                if(!this.won) {
+                if (!this.won) {
                     if (this.score === 0) {
                         this.score += 1000;
                     }
 
-                    if(this.lives.countLiving() == 3) {
+                    if (this.lives.countLiving() === 3) {
                         this.score += 50;
                     }
 
@@ -348,8 +353,11 @@ Scene.Level0.prototype = {
 
     updateMalwares : function () {
         "use strict";
-
-        if(!this.won) {
+        if (!this.active) {
+            return;
+        }
+        
+        if (!this.won) {
             this.createAliens();
         }
 
@@ -357,6 +365,7 @@ Scene.Level0.prototype = {
     },
 
     createAliens : function () {
+        "use strict";
         var k, alien, tween;
         if (this.counter === 1) {
             for (k = 0; k < 3; k = k + 1) {

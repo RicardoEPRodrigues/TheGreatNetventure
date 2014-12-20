@@ -8,5 +8,11 @@ EnemyGenerator.prototype = {
         "use strict";
         var alien = new Virus(this.game, x, y);
         return alien;
+    },
+    
+    getPlayerBullet : function (x, y) {
+        "use strict";
+        var bullet = new Bullet(this.game, x, y);
+        return bullet;
     }
 };

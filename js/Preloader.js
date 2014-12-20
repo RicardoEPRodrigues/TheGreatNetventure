@@ -11,7 +11,7 @@ Scene.Preloader.prototype = {
         this.preloadBar = this.add.sprite(this.game.world.centerX - 311, this.game.world.centerY - 27, 'preloaderBar'); // show loader bar
         this.load.setPreloadSprite(this.preloadBar); // assign loader image so it works as a loader
         
-        this.load.image('bullet', 'assets/images/static/bullet.png');
+        this.load.spritesheet('bullet', 'assets/images/dynamic/bullet10x36x4.png', 10, 36);
         this.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
         this.load.image('ship', 'assets/images/static/player.png');
         

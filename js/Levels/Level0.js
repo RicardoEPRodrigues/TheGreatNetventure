@@ -45,6 +45,7 @@ Scene.Level0.prototype = {
     // initialization func
     create : function () {
         "use strict";
+        var i, ship, bullet;
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -55,13 +56,18 @@ Scene.Level0.prototype = {
 
         //  Our bullet group
         this.bullets = this.game.add.group();
-        this.bullets.enableBody = true;
-        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.bullets.createMultiple(30, 'bullet');
-        this.bullets.setAll('anchor.x', 0.5);
-        this.bullets.setAll('anchor.y', 1);
-        this.bullets.setAll('outOfBoundsKill', true);
-        this.bullets.setAll('checkWorldBounds', true);
+        for (i = 0; i < 30; i++) {
+            bullet = this.gameObjGenerator.getPlayerBullet(200, 200);
+            bullet.kill();
+            this.bullets.add(bullet);
+        }
+//        this.bullets.enableBody = true;
+//        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+//        this.bullets.createMultiple(30, 'bullet');
+//        this.bullets.setAll('anchor.x', 0.5);
+//        this.bullets.setAll('anchor.y', 1);
+//        this.bullets.setAll('outOfBoundsKill', true);
+//        this.bullets.setAll('checkWorldBounds', true);
 
         // The enemy's bullets
         this.enemyBullets = this.game.add.group();
@@ -91,7 +97,6 @@ Scene.Level0.prototype = {
         this.lives = this.game.add.group();
         this.game.add.text(10, this.game.world.height - 10 - 34, 'Lives : ', { font: '34px Arial', fill: '#fff' });
 
-        var i, ship;
         for (i = 0; i < 3; i = i + 1) {
             ship = this.lives.create(130 + (30 * i), this.game.world.height - 28, 'ship');
             ship.anchor.setTo(0.5, 0.5);
@@ -356,7 +361,6 @@ Scene.Level0.prototype = {
         if (!this.active) {
             return;
         }
-        
         if (!this.won) {
             this.createAliens();
         }

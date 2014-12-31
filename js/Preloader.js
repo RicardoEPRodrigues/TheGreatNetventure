@@ -26,6 +26,7 @@ Scene.Preloader.prototype = {
         this.load.spritesheet('malwareButton', 'assets/images/buttons/malware.png', 134, 68);
         this.load.spritesheet('protectionButton', 'assets/images/buttons/protection.png', 170, 69);
         this.load.spritesheet('button', 'assets/images/buttons/button.png', 75, 75);
+        this.load.image('monoButton', 'assets/images/buttons/mono_button.png');
     },
     create: function () {
         "use strict";

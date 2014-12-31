@@ -106,7 +106,7 @@ Scene.Level0.prototype = {
         this.game.add.text(10, this.game.world.height - 10 - 34, 'Lives : ', { font: '34px Arial', fill: '#fff' });
 
         for (i = 0; i < 3; i = i + 1) {
-            ship = this.lives.create(130 + (30 * i), this.game.world.height - 28, 'ship');
+            ship = this.lives.create(130 + (40 * i), this.game.world.height - 28, 'ship');
             ship.anchor.setTo(0.5, 0.5);
             ship.angle = 90;
             ship.alpha = 0.6;

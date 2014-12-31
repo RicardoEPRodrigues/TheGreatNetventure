@@ -1,6 +1,6 @@
 function Virus(game, x, y) {
     "use strict";
-    Phaser.Sprite.call(this, game, x, y, 'invader');
+    Phaser.Sprite.call(this, game, x, y, 'virus');
     this.anchor.setTo(0.5, 0.5);
     this.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
     this.play('fly');

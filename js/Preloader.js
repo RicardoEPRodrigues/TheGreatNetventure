@@ -13,9 +13,11 @@ Scene.Preloader.prototype = {
         
         this.load.spritesheet('bullet', 'assets/images/dynamic/bullet10x36x4.png', 10, 36);
         this.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
-        this.load.image('ship', 'assets/images/static/player.png');
+        this.load.image('ship', 'assets/images/static/ship.png');
         
-        this.load.spritesheet('invader', 'assets/images/dynamic/invader32x32x4.png', 32, 32);
+         this.load.image('worm', 'assets/images/dynamic/worm.png');
+         this.load.image('virus', 'assets/images/dynamic/virus.png');
+        this.load.image('spyware', 'assets/images/dynamic/spyware.png');
         this.load.spritesheet('kaboom', 'assets/images/dynamic/explode.png', 128, 128);
         
         this.load.image('starfield', 'assets/images/backgrounds/starfield.png');

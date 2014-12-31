@@ -38,6 +38,9 @@ Scene.Level0 = function (game) {
     this.won = false;
 
     this.active = true;
+
+    //HUD Menu
+    this.infoMenu = null;
 };
 
 Scene.Level0.prototype = {
@@ -79,9 +82,14 @@ Scene.Level0.prototype = {
         this.enemyBullets.setAll('outOfBoundsKill', true);
         this.enemyBullets.setAll('checkWorldBounds', true);
 
+        this.infoMenu = this.game.add.group();
+
         //  The hero!
-        this.player = this.game.add.sprite(250, 500, 'ship');
+        this.player = this.game.add.sprite(250, this.game.world.height, 'ship');
         this.player.anchor.setTo(0.5, 0.5);
+
+        this.game.add.tween(this.player).to({ y: 500 }, 800, Phaser.Easing.Linear.None).start();
+
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
 
@@ -143,9 +151,9 @@ Scene.Level0.prototype = {
         //  Scroll the background
         this.starfield.tilePosition.y += 6;
 
+        //  Reset the player, then check for movement keys
+        this.player.body.velocity.setTo(0, 0);
         if (this.active) {
-            //  Reset the player, then check for movement keys
-            this.player.body.velocity.setTo(0, 0);
 
             if (this.cursors.left.isDown) {
                 this.player.body.velocity.x = -200;
@@ -205,7 +213,7 @@ Scene.Level0.prototype = {
                     this.scoreText.text = this.scoreString + this.score;
                     this.won = true;
                 }
-                
+
                 this.active = false;
 
                 this.stateText.text = " You Won,\n    Click\n   to Exit";
@@ -216,7 +224,7 @@ Scene.Level0.prototype = {
             }
         }
     },
-    
+
     checkDeath : function () {
         "use strict";
 
@@ -233,11 +241,11 @@ Scene.Level0.prototype = {
             this.game.input.onTap.addOnce(this.restart, this);
         }
     },
-    
+
     killPlayer : function () {
         "use strict";
         var live = this.lives.getFirstAlive(), explosion;
-        
+
         if (live) {
             live.kill();
         }
@@ -246,7 +254,7 @@ Scene.Level0.prototype = {
         explosion = this.explosions.getFirstExists(false);
         explosion.reset(this.player.body.x, this.player.body.y);
         explosion.play('kaboom', 30, false, true);
-        
+
         this.checkDeath();
     },
 
@@ -374,7 +382,7 @@ Scene.Level0.prototype = {
         this.counter = 0;
 
         this.won = false;
-        
+
         this.active = true;
 
         this.game.state.start('LevelsMenu');
@@ -392,10 +400,60 @@ Scene.Level0.prototype = {
         this.counter = this.counter + 1;
     },
 
+    drawMenu : function (text, sprite, postfunction) {
+        "use strict";
+        this.active = false;
+        if (postfunction) {
+            this.postFunction = postfunction;
+        }
+        // draw menu
+        var choiseLabel, textLabel, spriteCopy,
+            menuBack = new Phaser.Sprite(this.game, this.game.world.width / 2, this.game.world.height / 2, 'monoButton');
+        menuBack.anchor.setTo(0.5, 0.5);
+        menuBack.height = 400;
+        menuBack.width = 400;
+        this.infoMenu.add(menuBack);
+
+        // And a label to illustrate which menu item was chosen. (This is not necessary)
+        choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Click to Continue', { font: '30px Arial', fill: '#fff' });
+        choiseLabel.anchor.setTo(0.5, 0.5);
+        this.infoMenu.add(choiseLabel);
+
+        if (text) {
+            textLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height / 2 - 100, text, { font: '30px Arial', fill: '#fff' });
+            textLabel.anchor.setTo(0.5, 0.0);
+            this.infoMenu.add(textLabel);
+        }
+        
+        if (sprite) {
+            spriteCopy = this.game.add.sprite(this.game.world.width / 2, this.game.world.height / 2 - 150, sprite.key, sprite.frame);
+            spriteCopy.anchor.set(0.5, 0.5);
+            this.infoMenu.add(spriteCopy);
+        }
+
+        this.game.world.bringToTop(this.infoMenu);
+
+        this.game.input.onTap.addOnce(function () {
+            //delete menu
+            this.infoMenu.destroy();
+            this.infoMenu = this.game.add.group();
+            this.active = true;
+            if (this.postFunction) {
+                this.postFunction(this);
+                this.postFunction = null;
+            }
+        }, this);
+    },
+
     createMalwares : function () {
         "use strict";
         var k, malware, tween;
         if (this.counter === 1) {
+            this.drawMenu("Arrow keys to Move te ship.\n\n          SPACE to fire.", this.player, function(scene) {
+                scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
+            });
+        }
+        if (this.counter === 3) {
             for (k = 0; k < 3; k = k + 1) {
                 malware = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
                 this.malwares.add(malware);

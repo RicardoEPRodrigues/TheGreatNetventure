@@ -2,6 +2,8 @@ Scene.Level1 = function (game) {
     "use strict";
     Scene.Level0.call(this, game);
     this.minTimeToWin = 24;
+    this.maxTimeToWin = 120;
+    this.mutiplier = 1;
 };
 
 Scene.Level1.prototype = Object.create(Scene.Level0.prototype);

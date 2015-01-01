@@ -26,6 +26,7 @@ Scene.Level0 = function (game) {
     this.score = 0;
     this.scoreString = '';
     this.scoreText = null;
+    this.multiplier = 1;
     this.lives = null;
     this.stateText = null;
 
@@ -34,6 +35,7 @@ Scene.Level0 = function (game) {
     this.counter = 0;
 
     this.minTimeToWin = 5;
+    this.maxTimeToWin = 10;
 
     this.won = false;
 
@@ -197,7 +199,7 @@ Scene.Level0.prototype = {
 
     checkWin : function () {
         "use strict";
-        if (this.malwares.countLiving() === 0 && this.lives.countLiving() !== 0) {
+        if (this.malwares.countLiving() === 0 && this.lives.countLiving() !== 0 || this.maxTimeToWin <= this.counter) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill');
 
@@ -266,7 +268,7 @@ Scene.Level0.prototype = {
         malware.kill();
 
         //  Increase the score
-        this.score += 20;
+        this.score += 20 * this.multiplier;
         this.scoreText.text = this.scoreString + this.score;
 
         //  And create an explosion :)

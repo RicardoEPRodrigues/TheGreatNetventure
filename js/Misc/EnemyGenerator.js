@@ -10,6 +10,12 @@ EnemyGenerator.prototype = {
         return alien;
     },
     
+    getSpyware : function (x, y) {
+        "use strict";
+        var alien = new Spyware(this.game, x, y);
+        return alien;
+    },
+    
     getPlayerBullet : function (x, y) {
         "use strict";
         var bullet = new Bullet(this.game, x, y);

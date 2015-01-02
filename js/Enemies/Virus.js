@@ -5,7 +5,7 @@ function Virus(game, x, y) {
     this.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
     this.play('fly');
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    this.body.moves = false;
+//    this.body.moves = false;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
 //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);

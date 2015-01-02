@@ -35,7 +35,7 @@ Scene.Level0 = function (game) {
     this.counter = 0;
 
     this.minTimeToWin = 5;
-    this.maxTimeToWin = 10;
+    this.maxTimeToWin = 9999999;
 
     this.won = false;
 
@@ -189,7 +189,6 @@ Scene.Level0.prototype = {
 
     render : function () {
         "use strict";
-
         // for (var i = 0; i < this.malwares.length; i++)
         // {
         //     this.game.debug.body(this.malwares.children[i]);
@@ -426,7 +425,7 @@ Scene.Level0.prototype = {
             textLabel.anchor.setTo(0.5, 0.0);
             this.infoMenu.add(textLabel);
         }
-        
+
         if (sprite) {
             spriteCopy = this.game.add.sprite(this.game.world.width / 2, this.game.world.height / 2 - 150, sprite.key, sprite.frame);
             spriteCopy.anchor.set(0.5, 0.5);
@@ -449,7 +448,7 @@ Scene.Level0.prototype = {
 
     createMalwares : function () {
         "use strict";
-        var k, malware, tween;
+        var k, malware, follower;
         if (this.counter === 1) {
             this.drawMenu("Arrow keys to Move te ship.\n\n          SPACE to fire.", this.player, function(scene) {
                 scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
@@ -467,11 +466,14 @@ Scene.Level0.prototype = {
                 //            malware.checkWorldBounds = true;
                 //            malware.outOfBoundsKill = true;
 
-                tween = this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+                this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
                 .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
                 .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
                 .start();
+
+                follower = this.gameObjGenerator.getFollower(k * 48 * 3 + 50, k * 50 + 50 + 10, Virus, malware);
+                this.malwares.add(follower);
             }
         }
     }

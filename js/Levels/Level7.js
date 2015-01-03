@@ -75,12 +75,12 @@ Scene.Level7.prototype.createMalwares = function () {
                 .to({ x: malware.position.x - 30 * (k + 1)}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x, y: malware.position.y + 450}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x, y: malware.position.y + 100}, 1000, Phaser.Easing.Linear.None)
-                .to({ y: malware.position.y + 100, alpha: 100}, 1000, Phaser.Easing.Linear.None)
+                .to({ y: malware.position.y + 100}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x + 10 * (k + 1), y: malware.position.y + 100 * (k + 1)}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x + 10 * (k + 2), y: malware.position.y + 100 * (k + 2)}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x + 30 * (k + 1)}, 1000, Phaser.Easing.Linear.None)
                 .to({ x: malware.position.x - 30 * (k + 1)}, 1000, Phaser.Easing.Linear.None)
-                .to({ x: malware.position.x, y: malware.position.y + 450, alpha: 0}, 1000, Phaser.Easing.Linear.None)
+                .to({ x: malware.position.x, y: malware.position.y + 450}, 1000, Phaser.Easing.Linear.None)
                 .to({ y: malware.position.y + 300}, 1000, Phaser.Easing.Linear.None)
                 .start();
         }

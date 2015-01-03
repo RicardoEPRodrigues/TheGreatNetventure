@@ -1,14 +1,18 @@
-function Follower(game, x, y, type, target) {
+function Follower(game, x, y, type, target, bodypart) {
     "use strict";
-    type.call(this, game, x, y);
+    if (bodypart === "undefined") {
+        type.call(this, game, x, y);
+    } else {
+        type.call(this, game, x, y, bodypart);
+    }
 
     // Save the target that this Follower will follow
     // The target is any object with x and y properties
     this.target = target;
 
     // Define constants that affect motion
-    this.MAX_SPEED = 300; // pixels/second
-    this.MIN_DISTANCE = 37; // pixels
+    this.MAX_SPEED = 250; // pixels/second
+    this.MIN_DISTANCE = 15; // pixels
 
     this.prototype = Object.create(type.prototype);
 }

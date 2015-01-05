@@ -8,6 +8,7 @@ function Spyware(game, x, y) {
 //    this.body.moves = false;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
+    this.lives = 2;
     //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
 
     game.add.tween(this)

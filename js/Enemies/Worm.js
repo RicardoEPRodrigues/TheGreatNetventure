@@ -7,6 +7,7 @@ function Worm(game, x, y, bodypart) {
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
+    this.lives = 1;
 }
 
 Worm.prototype = Object.create(Phaser.Sprite.prototype);

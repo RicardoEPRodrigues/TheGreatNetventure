@@ -1,6 +1,6 @@
-function Virus(game, x, y) {
+function Hacker(game, x, y) {
     "use strict";
-    Phaser.Sprite.call(this, game, x, y, 'virus');
+    Phaser.Sprite.call(this, game, x, y, 'hacker');
     this.anchor.setTo(0.5, 0.5);
     this.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
     this.play('fly');
@@ -8,16 +8,9 @@ function Virus(game, x, y) {
 //    this.body.moves = false;
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
-    this.lives = 1;
+    this.lives = 5;
 //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
 }
 
-Virus.prototype = Object.create(Phaser.Sprite.prototype);
-Virus.prototype.constructor = Virus;
-
-//Virus.prototype.outOfBoundsCheck = function () {
-//    "use strict";
-//    if (this.y >= 700) {
-//        this.kill();
-//    }
-//};
+Hacker.prototype = Object.create(Phaser.Sprite.prototype);
+Hacker.prototype.constructor = Hacker;

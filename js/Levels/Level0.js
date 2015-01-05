@@ -3,7 +3,7 @@ Scene.Level0 = function (game) {
     // characters info
     this.player = null;
     this.malwares = null;
-
+    this.boss = 'undefined';
     this.livingEnemies = [];
 
     // Bullet info
@@ -198,7 +198,7 @@ Scene.Level0.prototype = {
 
     checkWin : function () {
         "use strict";
-        if (this.malwares.countLiving() === 0 && this.lives.countLiving() !== 0 || this.maxTimeToWin <= this.counter) {
+        if (this.malwares.countLiving() === 0 && this.lives.countLiving() !== 0 || this.maxTimeToWin <= this.counter ||  this.boss.alive === false) {
             if (this.counter >= this.minTimeToWin) {
                 this.enemyBullets.callAll('kill');
 
@@ -209,6 +209,10 @@ Scene.Level0.prototype = {
 
                     if (this.lives.countLiving() === 3) {
                         this.score += 50;
+                    }
+                    
+                    if (this.boss.alive === false) {
+                        this.score += 5000;
                     }
 
                     this.scoreText.text = this.scoreString + this.score;
@@ -264,16 +268,20 @@ Scene.Level0.prototype = {
 
         //  When a bullet hits an malware we kill them both
         bullet.kill();
-        malware.kill();
+        
+        if (malware.lives === 1) {
+            malware.kill();
+            //  Increase the score
+            this.score += 20 * this.multiplier;
+            this.scoreText.text = this.scoreString + this.score;
 
-        //  Increase the score
-        this.score += 20 * this.multiplier;
-        this.scoreText.text = this.scoreString + this.score;
-
-        //  And create an explosion :)
-        var explosion = this.explosions.getFirstExists(false);
-        explosion.reset(malware.body.x, malware.body.y);
-        explosion.play('kaboom', 30, false, true);
+            //  And create an explosion :)
+            var explosion = this.explosions.getFirstExists(false);
+            explosion.reset(malware.body.x, malware.body.y);
+            explosion.play('kaboom', 30, false, true);
+        } else {
+            malware.lives = malware.lives - 1;
+        }
     },
 
     enemyBulletHitsPlayer : function (player, bullet) {

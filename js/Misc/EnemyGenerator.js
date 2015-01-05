@@ -21,6 +21,12 @@ EnemyGenerator.prototype = {
         var alien = new Worm(this.game, x, y, bodypart);
         return alien;
     },
+    
+    getHacker : function (x, y) {
+        "use strict";
+        var alien = new Hacker(this.game, x, y);
+        return alien;
+    },
 
     getPlayerBullet : function (x, y) {
         "use strict";

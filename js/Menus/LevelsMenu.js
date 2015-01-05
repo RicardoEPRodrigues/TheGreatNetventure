@@ -36,11 +36,12 @@ Scene.LevelsMenu.prototype = {
         //  as if the user cancelled the operation and didn't want to press the Button after all
 
         if (isOver) {
-            if (button.indexNum === 9) {
-                this.game.state.start('Level0');
-            } else {
+            /* Uncomment to use test level */
+            /*if (button.indexNum === 9) {
+            //    this.game.state.start('Level0');
+            } else {*/
                 this.game.state.start('Level' + button.indexNum);
-            }
+            //}
         }
     },
 

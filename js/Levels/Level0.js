@@ -13,6 +13,8 @@ Scene.Level0 = function (game) {
     this.numberOfBullets = 3;
     this.lastBulletShotAt = 0;
     this.firingTimer = 0;
+    this.enemyFireDelay = 2000;
+    this.enemyBullets = null;
 
     // controls info
     this.cursors = null;
@@ -210,7 +212,7 @@ Scene.Level0.prototype = {
                     if (this.lives.countLiving() === 3) {
                         this.score += 50;
                     }
-                    
+
                     if (this.boss.alive === false) {
                         this.score += 5000;
                     }
@@ -269,7 +271,7 @@ Scene.Level0.prototype = {
 
         //  When a bullet hits an malware we kill them both
         bullet.kill();
-        
+
         if (malware.lives === 1) {
             malware.kill();
             //  Increase the score
@@ -283,12 +285,12 @@ Scene.Level0.prototype = {
         } else {
             malware.lives = malware.lives - 1;
             angleToRotate = 30 * (3.14 / 90);
-//            malware.rotation = angleToRotate;
+            //            malware.rotation = angleToRotate;
             this.game.add.tween(malware)
-                .to({ x : malware.position.x + 5}, 50, Phaser.Easing.Linear.None)
-                .to({ x : malware.position.x - 10}, 100, Phaser.Easing.Linear.None, false, 0, 2, true)
-                .to({ x : malware.position.x - 5}, 50, Phaser.Easing.Linear.None)
-                .start();
+            .to({ x : malware.position.x + 5}, 50, Phaser.Easing.Linear.None)
+            .to({ x : malware.position.x - 10}, 100, Phaser.Easing.Linear.None, false, 0, 2, true)
+            .to({ x : malware.position.x - 5}, 50, Phaser.Easing.Linear.None)
+            .start();
         }
     },
 
@@ -338,7 +340,7 @@ Scene.Level0.prototype = {
             enemyBullet.reset(shooter.body.x, shooter.body.y);
 
             this.game.physics.arcade.moveToObject(enemyBullet, this.player, 120);
-            this.firingTimer = this.game.time.now + 2000;
+            this.firingTimer = this.game.time.now + this.enemyFireDelay;
         }
 
     },
@@ -380,6 +382,8 @@ Scene.Level0.prototype = {
         "use strict";
 
         //  A new level starts
+
+        this.enemyFireDelay = 2000;
 
         //resets the life count
         this.lives.callAll('revive');
@@ -466,13 +470,13 @@ Scene.Level0.prototype = {
     createMalwares : function () {
         "use strict";
         var k, malware, follower;
-//        if (this.counter === 1) {
-//            this.drawMenu("Arrow keys to Move te ship.\n\nSPACE to fire.",
-//                          this.player,
-//                          function (scene) {
-//                    scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
-//                });
-//        }
+        //        if (this.counter === 1) {
+        //            this.drawMenu("Arrow keys to Move te ship.\n\nSPACE to fire.",
+        //                          this.player,
+        //                          function (scene) {
+        //                    scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
+        //                });
+        //        }
         if (this.counter === 3) {
             for (k = 0; k < 3; k = k + 1) {
                 malware = this.gameObjGenerator.getSpyware(k * 48 * 3 + 50, k * 50 + 50);
@@ -485,14 +489,14 @@ Scene.Level0.prototype = {
                 //            malware.checkWorldBounds = true;
                 //            malware.outOfBoundsKill = true;
 
-//                this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
-//                    .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
-//                    .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
-//                    .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
-//                    .start();
-//
-//                follower = this.gameObjGenerator.getFollower(k * 48 * 3 + 50, k * 50 + 50 + 10, Virus, malware);
-//                this.malwares.add(follower);
+                //                this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+                //                    .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
+                //                    .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
+                //                    .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
+                //                    .start();
+                //
+                //                follower = this.gameObjGenerator.getFollower(k * 48 * 3 + 50, k * 50 + 50 + 10, Virus, malware);
+                //                this.malwares.add(follower);
             }
         }
     }

@@ -64,9 +64,15 @@ Scene.LevelDemo.prototype.createMalwares = function () {
         this.boss = this.gameObjGenerator.getHacker(250, 0);
         this.malwares.add(this.boss);
 
+        this.enemyFireDelay = 1000;
+        
         tween = this.game.add.tween(this.boss)
             .to({ x: 25, y: this.boss.position.y + 75}, 1000, Phaser.Easing.Linear.None)
             .to({ x: 475}, 2000, Phaser.Easing.Linear.None, true, 0, Infinity, true)
             .start();
+        
+        this.drawMenu("What's that?\n\nIt's a Hacker!\nThat's not good!\n\nIt tries to hack you and\nuse your information to\nblackmail you!", this.boss, function (scene) {
+            scene.drawMenu("But we may still\nhave a chance!\n\nYou have to remember,\nKeep your computer\nupdated!", scene.boss);
+        });
     }
 };

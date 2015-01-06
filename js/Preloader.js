@@ -8,7 +8,9 @@ Scene.Preloader.prototype = {
     preload: function () {
         "use strict";
         this.game.stage.backgroundColor = '#000000'; // set background colour for whole game
-        this.preloadBar = this.add.sprite(this.game.world.centerX - 311, this.game.world.centerY - 27, 'preloaderBar'); // show loader bar
+        this.preloadBar = this.add.sprite(0, this.game.world.centerY, 'preloaderBar'); // show loader bar
+        this.preloadBar.anchor.setTo(0.5, 0.5);
+        this.width = this.game.world.width;
         this.load.setPreloadSprite(this.preloadBar); // assign loader image so it works as a loader
         
         this.load.spritesheet('bullet', 'assets/images/dynamic/bullet10x36x4.png', 10, 36);

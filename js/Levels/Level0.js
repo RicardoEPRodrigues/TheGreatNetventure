@@ -265,6 +265,7 @@ Scene.Level0.prototype = {
 
     collisionHandler : function (bullet, malware) {
         "use strict";
+        var explosion, angleToRotate;
 
         //  When a bullet hits an malware we kill them both
         bullet.kill();
@@ -276,11 +277,18 @@ Scene.Level0.prototype = {
             this.scoreText.text = this.scoreString + this.score;
 
             //  And create an explosion :)
-            var explosion = this.explosions.getFirstExists(false);
+            explosion = this.explosions.getFirstExists(false);
             explosion.reset(malware.body.x, malware.body.y);
             explosion.play('kaboom', 30, false, true);
         } else {
             malware.lives = malware.lives - 1;
+            angleToRotate = 30 * (3.14 / 90);
+//            malware.rotation = angleToRotate;
+            this.game.add.tween(malware)
+                .to({ x : malware.position.x + 5}, 50, Phaser.Easing.Linear.None)
+                .to({ x : malware.position.x - 10}, 100, Phaser.Easing.Linear.None, false, 0, 2, true)
+                .to({ x : malware.position.x - 5}, 50, Phaser.Easing.Linear.None)
+                .start();
         }
     },
 
@@ -431,6 +439,7 @@ Scene.Level0.prototype = {
         if (text) {
             textLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height / 2 - 100, text, { font: '30px Arial', fill: '#fff' });
             textLabel.anchor.setTo(0.5, 0.0);
+            textLabel.align = 'center';
             this.infoMenu.add(textLabel);
         }
 
@@ -457,14 +466,16 @@ Scene.Level0.prototype = {
     createMalwares : function () {
         "use strict";
         var k, malware, follower;
-        if (this.counter === 1) {
-            this.drawMenu("Arrow keys to Move te ship.\n\n          SPACE to fire.", this.player, function(scene) {
-                scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
-            });
-        }
+//        if (this.counter === 1) {
+//            this.drawMenu("Arrow keys to Move te ship.\n\nSPACE to fire.",
+//                          this.player,
+//                          function (scene) {
+//                    scene.drawMenu("Let's get ready\nTO RUMBLE!", this.player);
+//                });
+//        }
         if (this.counter === 3) {
             for (k = 0; k < 3; k = k + 1) {
-                malware = this.gameObjGenerator.getBasicVirus(k * 48 * 3 + 50, k * 50 + 50);
+                malware = this.gameObjGenerator.getSpyware(k * 48 * 3 + 50, k * 50 + 50);
                 this.malwares.add(malware);
                 //            malware = this.malwares.create(k * 48 * 3, k * 50, 'invader');
                 //            malware.anchor.setTo(0.5, 0.5);
@@ -474,14 +485,14 @@ Scene.Level0.prototype = {
                 //            malware.checkWorldBounds = true;
                 //            malware.outOfBoundsKill = true;
 
-                this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
-                .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
-                .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
-                .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
-                .start();
-
-                follower = this.gameObjGenerator.getFollower(k * 48 * 3 + 50, k * 50 + 50 + 10, Virus, malware);
-                this.malwares.add(follower);
+//                this.game.add.tween(malware).to({ x: malware.position.x + 100 }, 2000, Phaser.Easing.Linear.None)
+//                    .to({ y: malware.position.y + 300 }, 1000, Phaser.Easing.Linear.None)
+//                    .to({ x: malware.position.x }, 2000, Phaser.Easing.Linear.None)
+//                    .to({ y: malware.position.y + 100 }, 1000, Phaser.Easing.Linear.None)
+//                    .start();
+//
+//                follower = this.gameObjGenerator.getFollower(k * 48 * 3 + 50, k * 50 + 50 + 10, Virus, malware);
+//                this.malwares.add(follower);
             }
         }
     }

@@ -37,11 +37,11 @@ Scene.LevelsMenu.prototype = {
 
         if (isOver) {
             /* Uncomment to use test level */
-            /*if (button.indexNum === 9) {
-            //    this.game.state.start('Level0');
-            } else {*/
+            if (button.indexNum === 9) {
+                this.game.state.start('LevelDemo');
+            } else {
                 this.game.state.start('Level' + button.indexNum);
-            //}
+            }
         }
     },
 

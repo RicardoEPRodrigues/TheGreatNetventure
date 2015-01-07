@@ -13,9 +13,9 @@ Scene.MainMenu.prototype = {
         this.starfield = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'starfield');
         this.playButton = this.game.add.button(this.game.world.centerX, 200, 'playButton', this.playOnUp, this, 1, 0, 2);
         this.playButton.anchor.set(0.5, 0.5);
-        this.virusButton = this.game.add.button(this.game.world.centerX, 300, 'malwareButton', this.protectionOnUp, this, 1, 0, 2);
+        this.virusButton = this.game.add.button(this.game.world.centerX, 300, 'malwareButton', this.malwareOnUp, this, 1, 0, 2);
         this.virusButton.anchor.set(0.5, 0.5);
-        this.protectionButton = this.game.add.button(this.game.world.centerX, 400, 'protectionButton', this.malwareOnUp, this, 1, 0, 2);
+        this.protectionButton = this.game.add.button(this.game.world.centerX, 400, 'protectionButton', this.protectionOnUp, this, 1, 0, 2);
         this.protectionButton.anchor.set(0.5, 0.5);
     },
 

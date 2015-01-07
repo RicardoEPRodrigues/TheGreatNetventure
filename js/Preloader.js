@@ -13,7 +13,9 @@ Scene.Preloader.prototype = {
         this.width = this.game.world.width;
         this.load.setPreloadSprite(this.preloadBar); // assign loader image so it works as a loader
         
-        this.load.spritesheet('bullet', 'assets/images/dynamic/bullet10x36x4.png', 10, 36);
+        this.load.spritesheet('bullet', 'assets/images/dynamic/avbullet17x40x4.png', 17, 40);
+        this.load.spritesheet('bulletSpyware', 'assets/images/dynamic/spybullet30x48x4.png', 30, 48);
+        this.load.spritesheet('bulletHacker', 'assets/images/dynamic/updatebullet24x24x4.png', 24, 24);
         this.load.image('enemyBullet', 'assets/images/static/enemy-bullet.png');
         this.load.image('ship', 'assets/images/static/ship.png');
         

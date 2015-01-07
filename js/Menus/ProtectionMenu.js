@@ -48,7 +48,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Anti-virus is a class of program that\n\nwill prevent and detect incoming\n\nviruses or search them in your\n\nhard drive in order to kill them all.', 'bullet', 'protection');
+                                  'Um anti-virus é um programa que\n\nprevine e detecta \n\nataques de virus. E também procura-os no teu disco rígido, de forma a eliminá-los.', 'bullet', 'protection');
         }
     },
     
@@ -59,7 +59,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Anti-spywares can provide real-time\n\nprotection, they scan all incoming\n\nnetwork data for spyware and blocks\n\nany threats it detects. Such programs\n\n inspect the contents of the computer\n\n and remove files and entries, that\n\nmatch with a list of known spywares.',
+                                  'Os anti-spywares fornecem protecção em tempo real verificando todos os dados da rede à procura de spywares e bloqueando qualquer possível ameaça que detecte. Such programs\n\n inspect the contents of the computer\n\n and remove files and entries, that\n\nmatch with a list of known spywares.',
                                   'bulletSpyware', 'protection');
         }
     },

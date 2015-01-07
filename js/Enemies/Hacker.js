@@ -10,6 +10,7 @@ function Hacker(game, x, y) {
     this.outOfBoundsKill = true;
     this.lives = 5;
 //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
+    this.weakness = BulletType.SECURITYUPDATES;
 }
 
 Hacker.prototype = Object.create(Phaser.Sprite.prototype);

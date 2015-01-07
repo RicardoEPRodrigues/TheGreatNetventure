@@ -8,6 +8,7 @@ function Worm(game, x, y, bodypart) {
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
     this.lives = 1;
+    this.weakness = BulletType.SECURITYUPDATES;
 }
 
 Worm.prototype = Object.create(Phaser.Sprite.prototype);

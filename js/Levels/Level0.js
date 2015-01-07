@@ -15,10 +15,14 @@ Scene.Level0 = function (game) {
     this.firingTimer = 0;
     this.enemyFireDelay = 2000;
     this.enemyBullets = null;
+    this.activeBullet = BulletType.ANTIVIRUS;
 
     // controls info
     this.cursors = null;
     this.fireButton = null;
+    this.firstWeaponButton = null;
+    this.secondWeaponButton = null;
+    this.thirdWeaponButton = null;
 
     // special effects
     this.explosions = null;
@@ -63,8 +67,18 @@ Scene.Level0.prototype = {
 
         //  Our bullet group
         this.bullets = this.game.add.group();
-        for (i = 0; i < 30; i++) {
-            bullet = this.gameObjGenerator.getPlayerBullet(200, 200);
+        for (i = 0; i < 10; i++) {
+            bullet = this.gameObjGenerator.getAntiVirusBullet(200, 200);
+            bullet.kill();
+            this.bullets.add(bullet);
+        }
+        for (i = 0; i < 10; i++) {
+            bullet = this.gameObjGenerator.getAntiSpywareBullet(200, 200);
+            bullet.kill();
+            this.bullets.add(bullet);
+        }
+        for (i = 0; i < 10; i++) {
+            bullet = this.gameObjGenerator.getSecurityUpdateBullet(200, 200);
             bullet.kill();
             this.bullets.add(bullet);
         }
@@ -78,13 +92,11 @@ Scene.Level0.prototype = {
 
         // The enemy's bullets
         this.enemyBullets = this.game.add.group();
-        this.enemyBullets.enableBody = true;
-        this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
-        this.enemyBullets.createMultiple(30, 'enemyBullet');
-        this.enemyBullets.setAll('anchor.x', 0.5);
-        this.enemyBullets.setAll('anchor.y', 1);
-        this.enemyBullets.setAll('outOfBoundsKill', true);
-        this.enemyBullets.setAll('checkWorldBounds', true);
+        for (i = 0; i < 30; i++) {
+            bullet = this.gameObjGenerator.getEnemyBullet(200, 200);
+            bullet.kill();
+            this.enemyBullets.add(bullet);
+        }
 
         this.infoMenu = this.game.add.group();
 
@@ -129,6 +141,9 @@ Scene.Level0.prototype = {
         //  And some controls to play the game with
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.firstWeaponButton = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        this.secondWeaponButton = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        this.thirdWeaponButton = this.game.input.keyboard.addKey(Phaser.Keyboard.THREE);
 
         this.game.time.events.loop(Phaser.Timer.SECOND, this.updateMalwares, this);
     },
@@ -171,6 +186,17 @@ Scene.Level0.prototype = {
                 this.player.body.velocity.y = 200;
             }
 
+            //Weapon switch
+            if (this.firstWeaponButton.isDown) {
+                this.switchWeapon(BulletType.ANTIVIRUS);
+            }
+            if (this.secondWeaponButton.isDown) {
+                this.switchWeapon(BulletType.ANTISPYWARE);
+            }
+            if (this.thirdWeaponButton.isDown) {
+                this.switchWeapon(BulletType.SECURITYUPDATES);
+            }
+
             //  Firing?
             if (this.fireButton.isDown) {
                 this.fireBullet();
@@ -186,6 +212,15 @@ Scene.Level0.prototype = {
             this.game.physics.arcade.overlap(this.malwares, this.player, this.enemyHitsPlayer, null, this);
 
             this.checkWin();
+        }
+    },
+
+    switchWeapon : function (bulletType) {
+        "use strict";
+        if (bulletType) {
+            if (bulletType !== this.activeBullet) {
+                this.activeBullet = bulletType;
+            }
         }
     },
 
@@ -272,25 +307,28 @@ Scene.Level0.prototype = {
         //  When a bullet hits an malware we kill them both
         bullet.kill();
 
-        if (malware.lives === 1) {
-            malware.kill();
-            //  Increase the score
-            this.score += 20 * this.multiplier;
-            this.scoreText.text = this.scoreString + this.score;
+        if (bullet.bulletType === BulletType.SECURITYUPDATES ||
+            bullet.bulletType === malware.weakness) {
+            if (malware.lives === 1) {
+                malware.kill();
+                //  Increase the score
+                this.score += 20 * this.multiplier;
+                this.scoreText.text = this.scoreString + this.score;
 
-            //  And create an explosion :)
-            explosion = this.explosions.getFirstExists(false);
-            explosion.reset(malware.body.x, malware.body.y);
-            explosion.play('kaboom', 30, false, true);
-        } else {
-            malware.lives = malware.lives - 1;
-            angleToRotate = 30 * (3.14 / 90);
-            //            malware.rotation = angleToRotate;
-            this.game.add.tween(malware)
-            .to({ x : malware.position.x + 5}, 50, Phaser.Easing.Linear.None)
-            .to({ x : malware.position.x - 10}, 100, Phaser.Easing.Linear.None, false, 0, 2, true)
-            .to({ x : malware.position.x - 5}, 50, Phaser.Easing.Linear.None)
-            .start();
+                //  And create an explosion :)
+                explosion = this.explosions.getFirstExists(false);
+                explosion.reset(malware.body.x, malware.body.y);
+                explosion.play('kaboom', 30, false, true);
+            } else {
+                malware.lives = malware.lives - 1;
+                angleToRotate = 30 * (3.14 / 90);
+                //            malware.rotation = angleToRotate;
+                this.game.add.tween(malware)
+                    .to({ x : malware.position.x + 5}, 50, Phaser.Easing.Linear.None)
+                    .to({ x : malware.position.x - 10}, 100, Phaser.Easing.Linear.None, false, 0, 2, true)
+                    .to({ x : malware.position.x - 5}, 50, Phaser.Easing.Linear.None)
+                    .start();
+            }
         }
     },
 
@@ -359,7 +397,12 @@ Scene.Level0.prototype = {
         }
 
         //  Grab the first bullet we can from the pool
-        var bullet = this.bullets.getFirstExists(false);
+        var bullet;
+        this.bullets.forEachDead(function (child) {
+            if (child.bulletType === this.activeBullet) {
+                bullet = child;
+            }
+        }, this);
 
         if (bullet) {
             //  And fire it

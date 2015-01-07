@@ -15,22 +15,40 @@ EnemyGenerator.prototype = {
         var alien = new Spyware(this.game, x, y);
         return alien;
     },
-    
+
     getWorm : function (x, y, bodypart) {
         "use strict";
         var alien = new Worm(this.game, x, y, bodypart);
         return alien;
     },
-    
+
     getHacker : function (x, y) {
         "use strict";
         var alien = new Hacker(this.game, x, y);
         return alien;
     },
 
-    getPlayerBullet : function (x, y) {
+    getAntiVirusBullet : function (x, y) {
         "use strict";
-        var bullet = new Bullet(this.game, x, y);
+        var bullet = new AntiVirusBullet(this.game, x, y);
+        return bullet;
+    },
+
+    getAntiSpywareBullet : function (x, y) {
+        "use strict";
+        var bullet = new AntiSpywareBullet(this.game, x, y);
+        return bullet;
+    },
+
+    getSecurityUpdateBullet : function (x, y) {
+        "use strict";
+        var bullet = new SecurityUpdateBullet(this.game, x, y);
+        return bullet;
+    },
+
+    getEnemyBullet : function (x, y) {
+        "use strict";
+        var bullet = new EnemyBullet(this.game, x, y);
         return bullet;
     },
 

@@ -15,6 +15,8 @@ Scene.Level0 = function (game) {
     this.firingTimer = 0;
     this.enemyFireDelay = 2000;
     this.enemyBullets = null;
+    this.initialBulletTypesLock = [true, false, false];
+    this.bulletTypesLock = null;
     this.activeBullet = BulletType.ANTIVIRUS;
 
     // controls info
@@ -35,6 +37,8 @@ Scene.Level0 = function (game) {
     this.multiplier = 1;
     this.lives = null;
     this.stateText = null;
+    this.bulletTypesDisplay = null;
+
 
     this.gameObjGenerator = null;
 
@@ -56,7 +60,7 @@ Scene.Level0.prototype = {
     // initialization func
     create : function () {
         "use strict";
-        var i, ship, bullet;
+        var i, ship, bullet, bulletMenu, text;
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -65,23 +69,55 @@ Scene.Level0.prototype = {
 
         this.gameObjGenerator = new EnemyGenerator(this.game);
 
+        this.bulletTypesLock = this.initialBulletTypesLock.slice(0);
         //  Our bullet group
         this.bullets = this.game.add.group();
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 10; i = i + 1) {
             bullet = this.gameObjGenerator.getAntiVirusBullet(200, 200);
             bullet.kill();
             this.bullets.add(bullet);
         }
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 10; i = i + 1) {
             bullet = this.gameObjGenerator.getAntiSpywareBullet(200, 200);
             bullet.kill();
             this.bullets.add(bullet);
         }
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 10; i = i + 1) {
             bullet = this.gameObjGenerator.getSecurityUpdateBullet(200, 200);
             bullet.kill();
             this.bullets.add(bullet);
         }
+
+        bulletMenu = this.game.add.sprite(this.game.world.width - 10, this.game.world.height - 10, 'monoButton');
+        bulletMenu.anchor.setTo(1, 1);
+        bulletMenu.height = 60;
+        bulletMenu.alpha = 0.5;
+
+        text = this.game.add.text(this.game.world.width - 20, this.game.world.height - 10, 1, { font: '28px Arial', fill: '#fff' });
+        text.anchor.setTo(1, 1);
+        text = this.game.add.text(this.game.world.width - 60, this.game.world.height - 10, 2, { font: '28px Arial', fill: '#fff' });
+        text.anchor.setTo(1, 1);
+        text = this.game.add.text(this.game.world.width - 110, this.game.world.height - 10, 3, { font: '28px Arial', fill: '#fff' });
+        text.anchor.setTo(1, 1);
+
+        this.bulletTypesDisplay = this.game.add.group();
+        bullet = this.gameObjGenerator.getAntiVirusBullet(this.game.world.width - 40, this.game.world.height - 15);
+        this.bulletTypesDisplay.add(bullet);
+        if (!this.bulletTypesLock[0]) {
+            bullet.kill();
+        }
+        bullet = this.gameObjGenerator.getAntiSpywareBullet(this.game.world.width - 90, this.game.world.height - 15);
+        this.bulletTypesDisplay.add(bullet);
+        if (!this.bulletTypesLock[1]) {
+            bullet.kill();
+        }
+        bullet = this.gameObjGenerator.getSecurityUpdateBullet(this.game.world.width - 140, this.game.world.height - 30);
+        this.bulletTypesDisplay.add(bullet);
+        if (!this.bulletTypesLock[2]) {
+            bullet.kill();
+        }
+        this.updateBulletTypes();
+
         //        this.bullets.enableBody = true;
         //        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
         //        this.bullets.createMultiple(30, 'bullet');
@@ -92,7 +128,7 @@ Scene.Level0.prototype = {
 
         // The enemy's bullets
         this.enemyBullets = this.game.add.group();
-        for (i = 0; i < 30; i++) {
+        for (i = 0; i < 30; i = i + 1) {
             bullet = this.gameObjGenerator.getEnemyBullet(200, 200);
             bullet.kill();
             this.enemyBullets.add(bullet);
@@ -170,6 +206,12 @@ Scene.Level0.prototype = {
         //  Scroll the background
         this.starfield.tilePosition.y += 6;
 
+        this.bulletTypesDisplay.forEach(function (child) {
+            if (this.bulletTypesLock[child.bulletType - 1]) {
+                child.revive();
+            }
+        }, this);
+
         //  Reset the player, then check for movement keys
         this.player.body.velocity.setTo(0, 0);
         if (this.active) {
@@ -218,10 +260,23 @@ Scene.Level0.prototype = {
     switchWeapon : function (bulletType) {
         "use strict";
         if (bulletType) {
-            if (bulletType !== this.activeBullet) {
+            if (bulletType !== this.activeBullet && this.bulletTypesLock[bulletType - 1]) {
                 this.activeBullet = bulletType;
+                this.updateBulletTypes();
             }
         }
+    },
+
+    updateBulletTypes : function () {
+        "use strict";
+
+        this.bulletTypesDisplay.forEach(function (child) {
+            if (child.bulletType === this.activeBullet) {
+                child.alpha = 1;
+            } else {
+                child.alpha = 0.6;
+            }
+        }, this);
     },
 
     render : function () {
@@ -448,6 +503,10 @@ Scene.Level0.prototype = {
         this.won = false;
 
         this.active = true;
+
+        this.bulletTypesLock = this.initialBulletTypesLock.slice(0);
+        this.activeBullet = BulletType.ANTIVIRUS;
+        this.updateBulletTypes();
 
         this.game.state.start('LevelsMenu');
     },

@@ -4,6 +4,7 @@ Scene.Level1 = function (game) {
     this.minTimeToWin = 24;
     this.maxTimeToWin = 120;
     this.mutiplier = 1;
+    this.initialBulletTypesLock = [true, true, true];
 };
 
 Scene.Level1.prototype = Object.create(Scene.Level0.prototype);

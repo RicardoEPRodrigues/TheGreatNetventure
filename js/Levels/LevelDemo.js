@@ -18,7 +18,7 @@ Scene.LevelDemo.prototype.createMalwares = function () {
         this.drawMenu("Use the Arrow keys\nto Move te ship",
                       this.player,
                       function (scene) {
-                scene.drawMenu("This is an Anti-Virus Bullet!\nPress SPACE to shoot.", this.bullets.getTop());
+                scene.drawMenu("This is an Anti-Virus Bullet!\nPress SPACE to shoot.", this.bullets.getAt(0));
             }
                      );
     }
@@ -31,7 +31,7 @@ Scene.LevelDemo.prototype.createMalwares = function () {
 
             this.game.add.tween(malware).to({y : 60}, 1000, Phaser.Easing.Linear.None).start();
         }
-        this.drawMenu("These are Virus\n\nThey will try to\ndestroy your Files!\n\nYou must stop them!", this.malwares.getTop());
+        this.drawMenu("These are Virus\n\nThey will try to\ndestroy your Files!\n\nYou must stop them!", this.malwares.getBottom());
     }
     
     // Ate aos 20 segundos por mais virus
@@ -49,17 +49,25 @@ Scene.LevelDemo.prototype.createMalwares = function () {
         this.drawMenu("These are Spywares\n\nThey will try to\nspy on what you do!\n\nYou know what to do!", this.malwares.getTop());
     }
     
-    if (this.counter === 28) {
+    if (this.counter === 35) {
         this.drawMenu("What?\n\nThe Anti-Virus Bullets\ndon't work?\n\nWait, I may have something\nhere for you...", this.malwares.getTop(), function (scene) {
-            this.drawMenu("Here you go\nThis is a Anti-Spyware Bullet\nNow Finish Them!\n\nTo Switch Weapon\npress the number keys");
+            scene.bulletTypesLock[BulletType.ANTISPYWARE-1] = true;
+            scene.drawMenu("Here you go\nThis is a Anti-Spyware Bullet\nNow Finish Them!\n\nTo Switch Weapon\npress the number keys", this.bullets.getAt(10));
         });
     }
     
     // Ate ao 40 segundos por mais spywares
     // Ate ao 60 segundos por mais spywares e virus
+    
+    if (this.counter === 70) {
+        this.drawMenu("What?\n\nThe Anti-Virus Bullets\ndon't work?\n\nWait, I may have something\nhere for you...", this.malwares.getTop(), function (scene) {
+            scene.bulletTypesLock[BulletType.ANTISPYWARE-1] = true;
+            scene.drawMenu("Here you go\nThis is a Anti-Spyware Bullet\nNow Finish Them!\n\nTo Switch Weapon\npress the number keys", this.bullets.getAt(10));
+        });
+    }
 
     // Boss Fight!
-    if (this.counter === 90) {
+    if (this.counter === 120) {
 
         this.boss = this.gameObjGenerator.getHacker(250, 0);
         this.malwares.add(this.boss);

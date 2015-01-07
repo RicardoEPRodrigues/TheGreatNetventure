@@ -24,7 +24,7 @@ Scene.ProtectionMenu.prototype = {
         
         this.updatesButton = this.game.add.button(this.game.world.centerX, 400, 'button', this.updatesOnUp, this, 1, 0, 2);
         this.updatesButton.anchor.set(0.5, 0.5);
-        this.updatesButton.width = 140;
+        this.updatesButton.width = 180;
         
         style = { font: "bold 22px Arial", fill: "#ffffff", align: "center" };
         
@@ -34,7 +34,7 @@ Scene.ProtectionMenu.prototype = {
         text = this.game.add.text(this.game.world.centerX, 300, 'Anti-spyware', style);
         text.anchor.set(0.5, 0.5);
             
-        text = this.game.add.text(this.game.world.centerX, 400, 'Updates', style);
+        text = this.game.add.text(this.game.world.centerX, 400, 'Actualizações', style);
         text.anchor.set(0.5, 0.5);
         
         this.backButton = this.game.add.button(this.game.world.centerX, this.game.world.height - 100, 'backButton', this.backOnUp, this, 1, 0, 2);
@@ -48,7 +48,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Um anti-virus é um programa que\n\nprevine e detecta \n\nataques de virus. E também procura-os no teu disco rígido, de forma a eliminá-los.', 'bullet', 'protection');
+                                  'Um anti-virus é um programa que ajuda\n\n a prevenir e detectar ataques de virus.\n\n E permite também verificar no disco\n\n rígido, de forma a eliminá-los.', 'bullet', 'protection');
         }
     },
     
@@ -59,7 +59,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Os anti-spywares fornecem protecção em tempo real verificando todos os dados da rede à procura de spywares e bloqueando qualquer possível ameaça que detecte. Such programs\n\n inspect the contents of the computer\n\n and remove files and entries, that\n\nmatch with a list of known spywares.',
+                                  'Os anti-spywares fornecem protecção\n\n em tempo real verificando os dados\n\n da rede à procura de spywares e\n\n bloqueando qualquer possível ameaça.\n\n Estes programas verificam o\n\n conteúdo do computador e removem \n\nficheiros que constam numa\n\n lista de spywares conhecidos.',
                                   'bulletSpyware', 'protection');
         }
     },
@@ -71,7 +71,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Security updates prevent hackers from\n\nexploiting the vulnerabilities of your\n\nsystem, so it is really\n\nimportant to keep every program\n\nand operative system updated',
+                                  'As actualizaçoes de segurança ajudam\n\na prevenir possíveis ataques de \n\nhackers, corrigindo vulnerabilidades \n\nque possam existir no sistema. Daí ser \n\nimportante manter os programas\n\n e o sistema operativo actualizados',
                                   'bulletHacker', 'protection');
         }
     },

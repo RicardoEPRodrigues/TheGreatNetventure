@@ -10,6 +10,7 @@ function Spyware(game, x, y) {
     this.outOfBoundsKill = true;
     this.lives = 2;
     //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
+    this.weakness = BulletType.ANTISPYWARE;
 
     game.add.tween(this)
         .to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None)

@@ -48,7 +48,7 @@ Scene.ProtectionMenu.prototype = {
 
         if (isOver) {
             this.game.state.start('InformationScreen', true, false,
-                                  'Anti-virus is a class of program that\n\nwill prevent and detect incoming\n\nviruses or search them in your\n\nhard drive in order to kill them all.', 'bullet', 'protection');
+                                  'Anti-virus is a program that\n\nprevents and detects incoming\n\nvirus attacks.\n\n\nIt also searches viruses in your\n\nhard drive in order to eliminate them.', 'bullet', 'protection');
         }
     },
     

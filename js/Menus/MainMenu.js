@@ -26,7 +26,7 @@ Scene.MainMenu.prototype = {
 
         if (isOver) {
             //            this.starfield.visible = !this.starfield.visible;
-            this.game.state.start('LevelsMenu');
+            this.game.state.start('Introduction');
         }
     },
 

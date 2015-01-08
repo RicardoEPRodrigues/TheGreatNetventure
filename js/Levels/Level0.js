@@ -303,18 +303,13 @@ Scene.Level0.prototype = {
                         this.score += 50;
                     }
 
-                    if (this.boss.alive === false) {
-                        this.score += 5000;
-                    }
-
                     this.scoreText.text = this.scoreString + this.score;
                     this.won = true;
                 }
 
                 this.active = false;
 
-                this.stateText.text = " Ganhaste!\n     Clica\n  para sair";
-                this.stateText.visible = true;
+                this.drawMenu("Parabéns! A mensagem foi\n entregue com sucesso!");
 
                 //the "click to restart" handler
                 this.game.input.onTap.addOnce(this.restart, this);
@@ -507,7 +502,8 @@ Scene.Level0.prototype = {
         this.activeBullet = BulletType.ANTIVIRUS;
         this.updateBulletTypes();
 
-        this.game.state.start('LevelsMenu');
+//        this.game.state.start('LevelsMenu');
+        this.game.state.start('MainMenu');
     },
 
     updateMalwares : function () {
@@ -537,9 +533,15 @@ Scene.Level0.prototype = {
         this.infoMenu.add(menuBack);
 
         // And a label to illustrate which menu item was chosen. (This is not necessary)
-        choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Clica para Continuar', { font: '30px Arial', fill: '#fff' });
-        choiseLabel.anchor.setTo(0.5, 0.5);
-        this.infoMenu.add(choiseLabel);
+        if (this.won === true) {
+            choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Clica para Sair', { font: '30px Arial', fill: '#fff' });
+            choiseLabel.anchor.setTo(0.5, 0.5);
+            this.infoMenu.add(choiseLabel);
+        } else {
+            choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Clica para Continuar', { font: '30px Arial', fill: '#fff' });
+            choiseLabel.anchor.setTo(0.5, 0.5);
+            this.infoMenu.add(choiseLabel);
+        }
 
         if (text) {
             textLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height / 2 - 100, text, { font: '30px Arial', fill: '#fff' });

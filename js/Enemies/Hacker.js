@@ -9,6 +9,7 @@ function Hacker(game, x, y) {
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
     this.lives = 5;
+    this.multiplier = 250;
 //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
     this.weakness = BulletType.SECURITYUPDATES;
 }

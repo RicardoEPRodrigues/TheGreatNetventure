@@ -1,7 +1,7 @@
 Scene.LevelDemo = function (game) {
     "use strict";
     Scene.Level0.call(this, game);
-    this.minTimeToWin = 100;
+    this.minTimeToWin = 102;
     //this.multiplier = 4;
 };
 
@@ -132,7 +132,7 @@ Scene.LevelDemo.prototype.createMalwares = function () {
     }
     
     // Spywares!
-    if (this.counter >= 60 && this.counter <= 85 && this.counter % 10 === 0) {
+    if (this.counter >= 60 && this.counter <= 90 && this.counter % 10 === 0) {
         for (k = 0; k < 3; k = k + 1) {
             malware = this.gameObjGenerator.getSpyware(k * 100 + 200, 0);
             this.malwares.add(malware);
@@ -153,7 +153,7 @@ Scene.LevelDemo.prototype.createMalwares = function () {
     }
     
     // Boss Fight!
-    if (this.counter === 95) {
+    if (this.counter === 100) {
 
         this.boss = this.gameObjGenerator.getHacker(250, 0);
         this.malwares.add(this.boss);
@@ -172,17 +172,22 @@ Scene.LevelDemo.prototype.createMalwares = function () {
     }
     
     // Wall of Spywares and virus    
-    if (this.counter >= 96 && this.counter % 10 === 0) {
+    if (this.counter >= 100 && this.counter % 10 === 0) {
         for (k = 0; k < 6; k = k + 1) {
-            malware = this.gameObjGenerator.getBasicVirus(k * 95 + 10, 300);
+            
+            malware = this.gameObjGenerator.getBasicVirus(0, 300);
             this.malwares.add(malware);
-            malware = this.gameObjGenerator.getSpyware(k * 95 + 10, 200);
+            tween = this.game.add.tween(malware).to({ x: k * 95 + 10}, 2000, Phaser.Easing.Linear.None).start();
+            
+            malware = this.gameObjGenerator.getSpyware(0, 200);
             this.malwares.add(malware);
+            tween = this.game.add.tween(malware).to({ x: k * 95 + 10}, 2000, Phaser.Easing.Linear.None).start();
+            
             this.enemyFireDelay = 1000;
         }
     }
     
-    if (this.counter >= 96 && (this.counter - 100) % 8 === 0) {
+    if (this.counter >= 95 && (this.counter - 100) % 8 === 0) {
         this.enemyFireDelay = 500;
     }
 };

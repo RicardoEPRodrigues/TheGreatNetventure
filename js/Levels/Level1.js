@@ -3,7 +3,7 @@ Scene.Level1 = function (game) {
     Scene.Level0.call(this, game);
     this.minTimeToWin = 24;
     this.maxTimeToWin = 120;
-    this.mutiplier = 1;
+    //this.mutiplier = 1;
     this.initialBulletTypesLock = [true, true, true];
 };
 

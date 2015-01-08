@@ -9,6 +9,7 @@ function Virus(game, x, y) {
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
     this.lives = 1;
+    this.multiplier = 1;
     this.weakness = BulletType.ANTIVIRUS;
 //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
 }

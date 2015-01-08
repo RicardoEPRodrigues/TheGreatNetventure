@@ -3,7 +3,7 @@ Scene.Level5 = function (game) {
     Scene.Level0.call(this, game);
     this.minTimeToWin = 24;
     this.maxTimeToWin = 120;
-    this.mutiplier = 2;
+    //this.mutiplier = 2;
 };
 
 Scene.Level5.prototype = Object.create(Scene.Level0.prototype);

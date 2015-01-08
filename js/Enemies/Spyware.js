@@ -9,6 +9,7 @@ function Spyware(game, x, y) {
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
     this.lives = 2;
+    this.multiplier = 2;
     //    this.events.onOutOfBounds.add(this.outOfBoundsCheck, this);
     this.weakness = BulletType.ANTISPYWARE;
 

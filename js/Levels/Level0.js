@@ -313,7 +313,7 @@ Scene.Level0.prototype = {
 
                 this.active = false;
 
-                this.stateText.text = " You Won,\n    Click\n   to Exit";
+                this.stateText.text = " Ganhaste!\n     Clica\n  para sair";
                 this.stateText.visible = true;
 
                 //the "click to restart" handler
@@ -331,7 +331,7 @@ Scene.Level0.prototype = {
             this.player.kill();
             this.enemyBullets.callAll('kill');
 
-            this.stateText.text = " GAME OVER\n        Click\n    to restart";
+            this.stateText.text = " GAME OVER\n    Clica para\n   recomeçar";
             this.stateText.visible = true;
 
             //the "click to restart" handler
@@ -362,8 +362,7 @@ Scene.Level0.prototype = {
         //  When a bullet hits an malware we kill them both
         bullet.kill();
 
-        if (bullet.bulletType === BulletType.SECURITYUPDATES ||
-            bullet.bulletType === malware.weakness) {
+        if (bullet.bulletType === malware.weakness) {
             if (malware.lives === 1) {
                 malware.kill();
                 //  Increase the score
@@ -538,7 +537,7 @@ Scene.Level0.prototype = {
         this.infoMenu.add(menuBack);
 
         // And a label to illustrate which menu item was chosen. (This is not necessary)
-        choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Click to Continue', { font: '30px Arial', fill: '#fff' });
+        choiseLabel = this.game.add.text(this.game.world.width / 2, this.game.world.height - 150, 'Clica para Continuar', { font: '30px Arial', fill: '#fff' });
         choiseLabel.anchor.setTo(0.5, 0.5);
         this.infoMenu.add(choiseLabel);
 

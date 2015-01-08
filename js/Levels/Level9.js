@@ -2,7 +2,7 @@ Scene.Level9 = function (game) {
     "use strict";
     Scene.Level0.call(this, game);
     this.minTimeToWin = 12;
-    this.multiplier = 4;
+    //this.multiplier = 4;
 };
 
 Scene.Level9.prototype = Object.create(Scene.Level0.prototype);

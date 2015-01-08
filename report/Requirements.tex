@@ -1,3 +1,611 @@
 \chapter{Requisitos}
 \label{chap:requir} 
 %The final list of requirements
+Aqui apresentamos os requisitos criados como base e manutenção do nosso jogo.
+É de notar que muitos requisitos foram modificados, adicionados ou eliminados à medida que o projecto foi sendo desenvolvido.
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 1 \\
+\hline
+Tipo & Utilizador\\
+\hline
+Descrição & O sistema deve ser utilizado por alunos do secundário \\
+\hline
+Razão & Necessidade de passar a mensagem a um grupo de pessoas em idades vulneráveis a ataques informáticos. \\
+\hline
+Fonte & Ricardo Rodrigues \\
+\hline
+Critério de Avaliação & --- \\
+\hline
+Dependências & Nenhuma \\
+\hline
+Conflitos & Nenhum \\
+\hline
+Materiais de Suporte & Nenhum \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/10/29 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 2 \\
+\hline
+Tipo & Ambiente \\
+\hline
+Descrição & O sistema deverá ser executado num browser \\
+\hline
+Razão & Os utilizadores desejam algo simples e que não exija muito tempo. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Executar o sistema num browser \\
+\hline
+Dependências & Nenhuma \\
+\hline
+Conflitos & Nenhum \\
+\hline
+Materiais de Suporte & Nenhum \\
+\hline
+História & Levantado por Tiago Martins, 2014/10/27 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 3 \\
+\hline
+Tipo & Ambiente \\
+\hline
+Descrição & Para executar o sistema é necessário um computador com acesso à internet \\
+\hline
+Razão & A maior parte do grupo de foco tem acesso a esta plataforma e torna o acesso ao sistema mais fácil de partilhar. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Executar o sistema num browser apenas com acesso à internet\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Tiago Martins, 2014/10/27 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 4 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar os perigos da internet. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & 5, 6 e 7 \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/03 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 5 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar o que é um vírus informático. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 6 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar o que é um Spyware. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 7 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar o que é um Hacker. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 8 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar como os utilizadores se podem proteger dos perigos da internet. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet e como se proteger. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & 9, 10 e 11 \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/03 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 9 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar o que é um Anti-Vírus. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet e como se proteger. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 10 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar o que é um Anti-Spyware. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet e como se proteger. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 11 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O sistema deve mostrar ao utilizador que deve fazer updates regulares ao sistema e ao software de protecção. \\
+\hline
+Razão & A necessidade dos utilizadores de ficarem com uma noção de que perigos correm quando visitam a internet e como se proteger. \\
+\hline
+Fonte & Objectivo do Projecto \\
+\hline
+Critério de Avaliação & Nenhum\\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 12 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O utilizador deve poder escolher o modo Campanha. \\
+\hline
+Razão & Necessidade dos utilizadores de terem uma história envolvente. \\
+\hline
+Fonte & Entrevista \\
+\hline
+Critério de Avaliação & O sistema terá um modo de campanha. \\
+\hline
+Dependências & 13 e 14 \\
+\hline
+História & Levantado por Tiago Martins e Ricardo Rodrigues, 2014/10/29 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 13 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O modo Campanha é composto por níveis. \\
+\hline
+Razão & Os utilizadores podem querer voltar a refazer o nível. \\
+\hline
+Fonte & Entrevista \\
+\hline
+Critério de Avaliação & O sistema terá um modo de campanha. \\
+\hline
+Dependências & 14 \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 14 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Cada nível tem uma pontuação. \\
+\hline
+Razão & Necessidade dos utilizadores compararem resultados. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/11 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 15 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Cada inimigo derrotado aumenta a pontuação do nível. \\
+\hline
+Razão & Necessidade dos utilizadores compararem resultados. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & 16, 17 e 18 \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/19 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 16 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Os vírus aumentam a pontuação do nível em 20 pontos \\
+\hline
+Razão & Necessidade dos utilizadores compararem resultados. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/19 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 17 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Os hackers aumentam a pontuação do nível em 5000 pontos \\
+\hline
+Razão & Necessidade dos utilizadores compararem resultados. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/19 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 18 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Os Spywares aumentam a pontuação do nível em 40 pontos \\
+\hline
+Razão & Necessidade dos utilizadores compararem resultados. \\
+\hline
+Fonte & Entrevistas \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2014/11/19 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 19 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & O jogador tem três vidas. \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & 20, 21 e 22 \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 20 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Sempre que o jogador é atingido por um malware perde uma vida \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 21 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Sempre que o jogador é atingido por uma bala perde uma vida \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues, 2015/1/8 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 22 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Quando o jogador perde as três vidas o jogo termina \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 23 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Quando o jogador perde as três vidas o jogo termina \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 24 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Quando um malware é atingido perde uma vida \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & 25, 26 e 27 \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 25 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Um vírus tem uma vida \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/11/24 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 26 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Um Spyware tem 2 vidas \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/1/8 \\
+\hline
+\end{tabular}
+
+\begin{tabular} {|l|p{8cm}|} 
+%\hline
+%Item & Qty & Unit \\
+\hline
+Requisito \# & 27 \\
+\hline
+Tipo & Funcional \\
+\hline
+Descrição & Um Hacker tem 5 vidas \\
+\hline
+Razão & Necessidade do utilizador verificar o estado do jogo \\
+\hline
+Fonte & Nenhuma \\
+\hline
+Critério de Avaliação & Nenhum \\
+\hline
+Dependências & Nenhuma \\
+\hline
+História & Levantado por Ricardo Rodrigues e Tiago Martins, 2014/1/8 \\
+\hline
+\end{tabular}
+
+Plano de validação
+
+    O plano de validação será executado em três fases, primeiro será analisar os resultados das culture probes. Posteriormente iremos fazer entrevistas ao focus group e numa fase mais avançada iremos apresentar protótipos aos utilizadores para confirmar a informação obtida.

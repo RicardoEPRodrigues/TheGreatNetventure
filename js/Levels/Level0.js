@@ -309,7 +309,7 @@ Scene.Level0.prototype = {
 
                 this.active = false;
 
-                this.drawMenu("Parabéns! A mensagem foi\n entregue com sucesso!");
+                this.drawMenu("Parabéns, conseguiste \nderrotar o malvado Hacker e \ngraças a ti a mensagem foi \nentregue! O meu trabalho \naqui está feito, até à \npróxima cibernauta.\n *R2R2 a desligar*");
 
                 //the "click to restart" handler
                 this.game.input.onTap.addOnce(this.restart, this);

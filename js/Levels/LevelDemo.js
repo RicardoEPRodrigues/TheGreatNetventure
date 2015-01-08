@@ -167,7 +167,7 @@ Scene.LevelDemo.prototype.createMalwares = function () {
         
         this.drawMenu("Mas o que é isto?\n\nÉ um Hacker!\nIsto não é bom!\n\nEle vai tentar roubar \na tua informação\n para fazer chantagem!", this.boss, function (scene) {
             scene.bulletTypesLock[BulletType.SECURITYUPDATES - 1] = true;
-            scene.drawMenu("Aqui está!\n\n A bala de Actualizações\n de Segurança, boa sorte!", this.bullets.getAt(20));
+            scene.drawMenu("Aqui está!\n\n Usa a bala de \n Actualizações de Segurança \npara o derrotares.\n\n Boa sorte!", this.bullets.getAt(20));
         });
     }
     

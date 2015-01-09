@@ -53,8 +53,53 @@ Depois de cada elemento ter revelado os seus protótipos, foi feita uma escolha 
 
 Os protótipos que mais chamaram à atenção, pela sua criatividade e possíveis dinâmicas de jogo, foram o \textit{God Game}, que oferecia uma metáfora forte sobre a \textit{Cloud} e \textit{Malwares}, e o \textit{Hack and Slash}, que mostrava um jogo maior e mais complexo que implicava uma evolução da personagem e uma história forte. Infelizmente, por falta de conhecimentos para criar projectos assim tão grandes, decidiu-se optar por soluções mais pequenas.
 
-Assim, as possíveis escolhas foram o \textit{Railshooter} e o \textit{Platformer}, quer
+Assim, as possíveis escolhas foram o \textit{Railshooter} e o \textit{Platformer}. Ambos ofereciam uma maneira relativamente fácil de passar a mensagem, sem ser necessário um elevado nível de conhecimento num plataforma para fazer a sua implementação.
+
+A escolha final foi o Railshooter, oferecendo ao mesmo tem uma jogabilidade simples e uma metáfora que passava lindamente a mensagem.
+
+\emph{O transporte de uma mensagem electrónica que se tem de defender de ataques de Malwares.}
 
 \section{Protótipos de Baixa Fidelidade}
 
-Depois dos protótipos não-funcionais serem apresentados 
+Depois da escolha do protótipo não-funcional estar feita, é altura de criar os protótipos de baixa fidelidade.
+
+Para a criação destes protótipos servimo-nos de duas ferramentas.
+\begin{itemize}
+\item FluidUI
+\begin{itemize}
+\item Ferramenta para criação de protótipos de aplicações mobile.
+\item \url{https://www.fluidui.com/}
+\end{itemize}
+\item Phaser
+\begin{itemize}
+\item Motor de Jogo em HTML5 para jogos em Desktop e Mobile.
+\item \url{http://phaser.io/}
+\end{itemize}
+\end{itemize}
+
+Usamos o FluidUI para a criação de Menus que nos ajudariam a navegar pelos menus de jogo (Figura \ref{fig:fluidui})\footnote{Ver figuras nos anexos}, tendo tendo sido modificado mais tarde para corresponder a sugestões oferecidas.
+
+Pode ver o protótipo de menus aqui: \url{https://www.fluidui.com/editor/live/preview/p_yseSDiTk0xkn4E00n0aHrnrKT242USLL.1416862868340}.
+
+Quanto ao jogo em si, tomámos como base um jogo oferecido no website do Phaser, o Space Invader ( visite \url{http://examples.phaser.io/_site/view_full.html?d=games&f=invaders.js&t=invaders} para jogar). Partindo desta base criamos o nosso primeiro protótipo (Figura \ref{fig:phaser}).
+
+\section{Protótipo Final}
+
+Depois de algumas iterações com apresentações (Figura \ref{fig:pres}), entrevistas e testes de usabilidade que levaram a uma constante modificação do protótipo, criou-se o protótipo final.
+Este protótipo é um Demo do jogo que imaginámos construir, permitindo ao jogador ver os mecanismos de jogo e ao mesmo tempo passar a mensagem séria (que é o objectivo do projecto).
+
+Como é possível ver nas seguintes Figuras.
+
+\begin{figure}[h]
+\centering
+\includegraphics 
+	[scale = 0.5] {SpywareInfo}
+\caption{\label{fig:spyw}} Menu de Informação Sobre o Spyware
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics 
+	[scale = 0.5] {GameplayExample}
+\caption{\label{fig:gameplay}} Imagem do Jogo a ser jogado
+\end{figure}
